@@ -16,4 +16,10 @@ return array(
 
     // 加载扩展配置文件 多个用,隔开
     'LOAD_EXT_CONFIG' => 'db,view',
+
+    //域名部署
+    'APP_SUB_DOMAIN_DEPLOY' => 1,
+    'APP_SUB_DOMAIN_RULES'  => array(
+        'r.raven.com' => 'Admin'
+    )
 );

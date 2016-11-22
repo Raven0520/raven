@@ -11,5 +11,7 @@ namespace Admin\Controller;
 
 class LoginController extends EmptyController
 {
-    
+    public function index(){
+        $this->display();
+    }
 }

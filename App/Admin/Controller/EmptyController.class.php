@@ -12,6 +12,7 @@ use Common\Controller\CommonController;
 class EmptyController extends CommonController
 {
     public function _empty(){
+
         $this->display(ACTION_NAME);
     }
 }
