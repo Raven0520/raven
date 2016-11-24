@@ -43,9 +43,10 @@ body{
   font-family: 'Droid Serif', serif;
 }
 .login-top {
-  background: #E1E1E1;
-  border-radius: 25px 25px 0px 0px;
-  -webkit-border-radius:  25px 25px 0px 0px;
+  margin-top: 71%;
+  border: 1px solid #EEEEEE;
+  border-radius: 25px;
+  -webkit-border-radius:  25px;
   -moz-border-radius: 25px 25px 0px 0px;
   -o-border-radius: 25px 25px 0px 0px;
   padding: 40px 60px;

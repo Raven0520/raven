@@ -6,11 +6,14 @@ return array(
     //url访问模式为PathInfo模式
     'URL_MODEL' => '1',
 
+    //测试时关闭缓存
+    'TMPL_CACHE_ON' => false,//禁止模板编译缓存
+    'HTML_CACHE_ON' => false,//禁止静态缓存
+
     //域名部署
     'APP_SUB_DOMAIN_DEPLOY' => 1,
     'APP_SUB_DOMAIN_RULES' => array(
-        'r.raven.com' => 'Admin',
-        'raven.com'   => 'Home'
+        'r.raven.com' => 'Admin'
     ),
 
     //引用文件路径设置
