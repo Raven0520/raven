@@ -44,8 +44,6 @@ body{
 }
 .login-top {
   margin-top: 71%;
-  border: 1px solid #EEEEEE;
-  border-radius: 25px;
   -webkit-border-radius:  25px;
   -moz-border-radius: 25px 25px 0px 0px;
   -o-border-radius: 25px 25px 0px 0px;
@@ -62,10 +60,10 @@ body{
 	outline: none;
   font-size: 15px;
   font-weight: 500;
-  color: #818181;
+  color: #F45B4B;
   padding: 15px 20px;
   background: #CACACA;
-  border: 1px solid #ccc;
+  border: 1px solid #F45B4B;
   border-radius:25px;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
@@ -78,10 +76,10 @@ body{
 	outline: none;
   font-size: 15px;
   font-weight: 500;
-  color: #818181;
+  color: #F45B4B;
   padding: 15px 20px;
   background: #CACACA;
-  border: 1px solid #ccc;
+  border: 1px solid #F45B4B;
   border-radius:25px;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
@@ -126,7 +124,7 @@ body{
   -o-transition: 0.5s all;
 }
 .forgot {
-  text-align: right;
+  text-align: center;
 }
 .login-bottom {
   background: #E15748;
