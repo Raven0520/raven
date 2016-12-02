@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ZH">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Raven Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/Public/assets/css/style.css">
+    <link rel="stylesheet" href="/Public/assets/css/loader-style.css">
+    <link rel="stylesheet" href="/Public/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Public/assets/js/progress-bar/number-pb.css">
+    <link rel="stylesheet" type="text/css" href="/Public/js/dialog/skin/layer.css">
+    <block name="headerCss"></block>
+    <block name="headerJs"></block>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/Public/assets/ico/minus.png">
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+<!-- TOP NAVBAR -->
+<include file="Common/topNav"/>
+<!-- /END OF TOP NAVBAR -->
+
+<!-- SIDE MENU -->
+<include file="Common/leftNav"/>
+<!-- END OF SIDE MENU -->
+
+
+<!--  PAPER WRAP -->
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+        <!-- CONTENT -->
+        <!--TITLE -->
+        <div class="row">
+            <div id="paper-top">
+                <div class="col-lg-3">
+                    <h2 class="tittle-content-header">
+                            <i class="icon-window"></i>
+                            <span>{:CONTROLLER_NAME=='Index'?'Raven':CONTROLLER_NAME}{:ACTION_NAME=='index'?'':-ACTION_NAME}</span>
+                    </h2>
+
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="devider-vertical visible-lg"></div>
+                    <div class="tittle-middle-header">
+                        <block name="middle_header">
+
+                        </block>
+                    </div>
+
+                </div>
+                <div class="col-lg-2">
+                    <div class="devider-vertical visible-lg"></div>
+                    <block name="tool">
+
+                    </block>
+                    <!--<div class="btn-group btn-wigdet pull-right visible-lg">
+                        <div class="btn">
+                            Widget
+                        </div>
+                        <button data-toggle="dropdown" class="btn dropdown-toggle" type="button">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="#">
+                                    <span class="entypo-plus-circled margin-iconic"></span>Add New</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="entypo-heart margin-iconic"></span>Favorite</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="entypo-cog margin-iconic"></span>Setting</a>
+                            </li>
+                        </ul>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <!--/ TITLE -->
+
+        <!--面包屑导航-->
+        <!-- BREADCRUMB -->
+        <!--引入文件无法注释,如不引入,请删除-->
+        <!-- END OF BREADCRUMB -->
+
+        <!--  DEVICE MANAGER -->
+        <div class="content-wrap">
+            <div class="row">
+                <block name="content_1">
+
+                </block>
+            </div>
+        </div>
+        <!--  / DEVICE MANAGER -->
+
+
+        <div class="content-wrap">
+            <div class="row">
+                <block name="content_2">
+
+                </block>
+            </div>
+        </div>
+
+
+        <div class="content-wrap">
+            <div class="row">
+                <block name="content_3">
+
+                </block>
+            </div>
+            <!-- /END OF CONTENT -->
+
+
+            <!-- FOOTER -->
+            <div class="footer-space"></div>
+            <div id="footer">
+                <div class="devider-footer-left"></div>
+                <div class="time">
+                    <p id="spanDate">
+                    <p id="clock">
+                </div>
+            </div>
+            <!-- / END OF FOOTER -->
+
+
+        </div>
+    </div>
+</div>
+<!--  END OF PAPER WRAP -->
+
+<!-- RIGHT SLIDER CONTENT -->
+<include file="Common/rightNav"/>
+<!-- END OF RIGHT SLIDER CONTENT-->
+
+<!--MODAL ONE-->
+<block name="modal-one"></block>
+<!--END OF MODAL ONE-->
+<!--MODAL TWO-->
+<block name="modal-two"></block>
+<!--END OF MODAL TWO-->
+
+<include file="Common/footer"/>
+
+<block name="script"></block>
+</body>
+
+</html>

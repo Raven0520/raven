@@ -1,0 +1,20 @@
+<!--面包屑导航-->
+<ul id="breadcrumb">
+    <li>
+        <span class="entypo-home"></span>
+    </li>
+    <li><i class="fa fa-lg fa-angle-right"></i>
+    </li>
+    <li><a href="{:CONTROLLER_NAME == 'Index'?'/':CONTROLLER_NAME}" title="Sample page 1">{:CONTROLLER_NAME}</a>
+    </li>
+    <li><i class="fa fa-lg fa-angle-right"></i>
+    </li>
+    <li><a href="#" title="Sample page 1">{:ACTION_NAME}</a>
+    </li>
+    <li class="pull-right">
+        <div class="input-group input-widget">
+
+            <input style="border-radius:15px" type="text" placeholder="Search..." class="form-control">
+        </div>
+    </li>
+</ul>

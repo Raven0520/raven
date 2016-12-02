@@ -11,8 +11,29 @@ use Common\Controller\CommonController;
 
 class EmptyController extends CommonController
 {
-    public function _empty(){
 
+    // 主键
+    protected $pk = '';
+    protected $model = '';
+    protected $where = array();
+
+    public function _empty(){
         $this->display(ACTION_NAME);
+    }
+
+    /**
+     * 数据库 增加或修改信息操作
+     */
+    public function add(){
+        if (IS_POST){
+            $modal = D(CONTROLLER_NAME);
+            $id    = $modal->_update(array_filter($_POST));
+            if (false != $id){
+                $this->res['id'] = $id;
+            }else {
+                $this->res['message'] = $modal->getError();
+            }
+            $this->ajaxReturn($this->res);
+        }
     }
 }
