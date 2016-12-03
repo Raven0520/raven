@@ -27,11 +27,11 @@ class EmptyController extends CommonController
     public function add(){
         if (IS_POST){
             $modal = D(CONTROLLER_NAME);
-            $id    = $modal->_update(array_filter($_POST));
+            $id    = $modal->update(array_filter($_POST));
             if (false != $id){
                 $this->res['id'] = $id;
             }else {
-                $this->res['message'] = $modal->getError();
+                $this->res['info'] = $modal->getError();
             }
             $this->ajaxReturn($this->res);
         }

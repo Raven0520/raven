@@ -16,10 +16,10 @@ Common = {
 
         $.post(url,formData,function (res) {
             if (res.status == 1){
-                return msg.success(res.message,jump);
+                return msg.success(res.info,jump);
             }
             if (res.status == 0){
-                return msg.error(res.message);
+                return msg.error(res.info);
             }
         },"JSON");
     }

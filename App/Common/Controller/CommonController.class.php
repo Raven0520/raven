@@ -18,7 +18,7 @@ class CommonController extends Controller
     protected $pages = array();
     protected $model = '';
 
-    protected $res = array('status' => 1, 'message' => '操作成功');
+    protected $res = array('status' => 1, 'info' => '操作成功');
 
     protected function _initialize()
     {
