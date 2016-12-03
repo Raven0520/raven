@@ -14,8 +14,16 @@ class EmptyController extends CommonController
 
     // 主键
     protected $pk = '';
+    // 数据库模型
     protected $model = '';
+    // 排序
+    protected $order = '';
     protected $where = array();
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+    }
 
     public function _empty(){
         $this->display(ACTION_NAME);
@@ -36,4 +44,5 @@ class EmptyController extends CommonController
             $this->ajaxReturn($this->res);
         }
     }
+
 }
