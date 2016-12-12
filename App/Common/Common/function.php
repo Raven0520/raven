@@ -7,5 +7,31 @@
  */
 
 /**
- * 公用的弹窗方法 返回控制器的执行结果
+ * 菜单类型的名称
  */
+function MenuTypeName($menu_type){
+    if ($menu_type == 0){
+        return 'Main Menu';
+    }
+    if ($menu_type == 1){
+        return 'Sec Menu';
+    }
+    if ($menu_type == 2){
+        return 'Win Menu';
+    }
+}
+
+/**
+ * 获取状态名称
+ */
+function StatusName($status){
+    if ($status == 1){
+        return 'Active';
+    }
+    if ($status == 0){
+        return 'Disabled';
+    }
+    if ($status == -1){
+        return 'Del';
+    }
+}

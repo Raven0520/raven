@@ -1,0 +1,28 @@
+<script>
+    /**
+     * 获取并显示二级菜单及弹窗菜单
+     */
+    function showSec(id) {
+        $.ajax({
+            type: "POST",
+            url : '{:U("getSecMenu")}',
+            data: {
+                sort_id : id
+            },
+            success : function (res) {
+                var i;
+                for (i = 0; i < res.length; i++){
+                    $('#main'+id).append('' +
+                            '<tr id="sec"' + res[i].id +'>' +
+                            '<td style="width:12%; text-align: center">' + res[i].menu_type + '|MenuTypeName</td>' +
+                            '<td style="width:16%; text-align: center">' + res[i].title + '</td>' +
+                            '<td style="width:12%; text-align: center"><i class="'+ res[i].icon +'"></i></td>' +
+                            '<td style="width:12%; text-align: center">' +
+                            '<span class="status-metro status-active">'+ res[i].menu_status +'|StatusName</span>' +
+                            '</td>' +
+                            '</tr>')
+                }
+            }
+        })
+    }
+</script>

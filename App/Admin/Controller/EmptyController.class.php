@@ -23,10 +23,11 @@ class EmptyController extends CommonController
     protected function _initialize()
     {
         parent::_initialize();
+        $this->where['status'] = array('neq', -1);
     }
 
     public function _empty(){
-        $this->display(ACTION_NAME);
+        $this->display(CONTROLLER_NAME);
     }
 
     /**
@@ -42,6 +43,20 @@ class EmptyController extends CommonController
                 $this->res['info'] = $modal->getError();
             }
             $this->ajaxReturn($this->res);
+        }
+    }
+
+    /**
+     * 列表数据
+     */
+    public function index($where = null, $field = true, $model = CONTROLLER_NAME) {
+        if (IS_POST) {
+            '' != I('id') && $this->where['id'] = array('like', '%' . (string)I('id') . '%');
+            '' != I('name') && $this->where['name'] = array('like', '%' . (string)I('name') . '%');
+            '' != I('contract_type') && '' != I('contract') && $this->where[I('contract_type')] = array('like', '%' . (string)I('contract') . '%');
+            $this->ajaxReturn($this->lists($model, $where ? array_merge($this->where, $where) : $this->where, $field));
+        } else {
+            $this->display();
         }
     }
 

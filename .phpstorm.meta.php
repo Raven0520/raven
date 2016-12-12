@@ -9,6 +9,8 @@
 			'Mongo' instanceof Think\Model\MongoModel,
 			'View' instanceof Think\Model\ViewModel,
 			'Relation' instanceof Think\Model\RelationModel,
+			'AuthRule' instanceof Admin\Model\AuthRuleModel,
+			'Common' instanceof Common\Model\CommonModel,
 			'Merge' instanceof Think\Model\MergeModel,
 		],
 	];

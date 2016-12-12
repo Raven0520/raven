@@ -1,7 +1,7 @@
 <extend name="Common/index"/>
 
 <block name="tool">
-    <a type="button" data-toggle="modal" data-target="#addMenu" style="cursor: pointer" class="visible-lg">
+    <a type="button" data-toggle="modal" data-target="#add" style="cursor: pointer" class="visible-lg">
         <span class="entypo-plus-circled margin-iconic"></span>
         Add Rule</a>
 </block>
@@ -31,17 +31,47 @@
                 <table id="responsive-example-table" class="table large-only">
                     <tbody>
                     <tr class="text-center">
-                        <th style="width:12%;">菜单类型</th>
-                        <th style="width:16%; text-align: center">菜单名称</th>
-                        <th style="width:12%; text-align: center">图标</th>
-                        <th style="width:12%; text-align: center">操作</th>
+                        <th style="width:12%; text-align: center">Type</th>
+                        <th style="width:16%; text-align: center">Name</th>
+                        <th style="width:12%; text-align: center">Icon</th>
+                        <th style="width:12%; text-align: center">Control</th>
                     </tr>
-                    <tr class="text-center">
-                        <th style="width:12%;">菜单类型</th>
-                        <th style="width:16%; text-align: center">菜单名称</th>
-                        <th style="width:12%; text-align: center">图标</th>
-                        <th style="width:12%; text-align: center">操作</th>
-                    </tr>
+                    <foreach name="menu" item="vo">
+                        <tr onclick="show('{$vo.id}')" style="cursor: pointer">
+                            <td style="width:12%; text-align: center">{$vo.menu_type}</td>
+                            <td style="width:16%; text-align: center">{$vo.title}</td>
+                            <td style="width:12%; text-align: center"><i class="{$vo.icon}"></i></td>
+                            <td style="width:12%; text-align: center">
+                                <a onclick="AddSec('{$vo.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
+                                    <span class="status-metro status-add">Add Sec</span>
+                                </a>
+                                <span class="status-metro status-active">{$vo.menu_status}</span>
+                            </td>
+                        </tr>
+                        <tr style="display: table-row; border: none; padding: 0px;">
+                            <td colspan="7" style="padding: 0px; border: none;">
+                                <div id="main{$vo.id}" style="display: none">
+                                    <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border: none;" class="datatable table table-striped table-hover">
+                                        <tbody>
+                                        <volist name="$vo[second]" id="sec">
+                                            <tr>
+                                                <td style="width:12%; text-align: center">{$sec.menu_type}</td>
+                                                <td style="width:16%; text-align: center">{$sec.title}</td>
+                                                <td style="width:12%; text-align: center"><i class="{$sec.icon}"></i></td>
+                                                <td style="width:12%; text-align: center">
+                                                    <a onclick="AddSec('{$sec.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
+                                                        <span class="status-metro status-add">Add Sec</span>
+                                                    </a>
+                                                    <span class="status-metro status-active">{$sec.menu_status}</span>
+                                                </td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </foreach>
                     </tbody>
                 </table>
 
@@ -55,7 +85,7 @@
 </block>
 
 <block name="modal-one">
-    <div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
         <div class="modal-dialog" role="document" style="width: 480px;">
             <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
                 <div class="row" style="margin-top: 25px;">
@@ -64,13 +94,13 @@
                         <div class="box">
                             <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
                                 <h4><i class="fa fa-list"></i>
-                                    <span>Add Menu</span><span id="title"></span>
+                                    <span>Add&nbsp;</span><span id="title">Main</span>
                                 </h4>
                             </div>
                             <div class="box-body">
                                 <form class="form-horizontal" role="form" id="submitForm">
-                                    <input type="hidden" name="sort_id" id="sort_id">
-                                    <input type="hidden" name="menu_type" id="menu_type">
+                                    <input type="hidden" name="sort_id" id="sort_id" value="0">
+                                    <input type="hidden" name="menu_type" id="menu_type" value="0">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Title</label>
                                         <div class="col-sm-8">
@@ -113,13 +143,13 @@
 <block name="script">
     <script>
         var SCOPE = {
-            'add_url'  : '/AuthRule/add',
-            'jump_url' : '/AuthRule'
+            'add_url': '/AuthRule/add',
+            'jump_url': '/AuthRule'
         };
 
         function getIcon(icon) {
             $('#icon').addClass(icon);
-            if (icon == ''){
+            if (icon == '') {
                 $('#icon').removeClass();
             }
         }
@@ -129,22 +159,43 @@
          */
         function add() {
             var title = $('input[name="title"]').val();
-            var name  = $('input[name="name"]').val();
-            var icon  = $('#icon_code').val();
+            var name = $('input[name="name"]').val();
+            var icon = $('#icon_code').val();
 
-            if (!title){
+            if (!title) {
                 return msg.error('Title不能为空!');
             }
-            if (!name){
+            if (!name) {
                 return msg.error('Name不能为空!');
             }
-            if (!icon){
+            if (!icon) {
                 return msg.error('Icon不能为空!');
             }
 
-            $('#sort_id').val(0);
-            $('#menu_type').val(0);
             Common.Submit();
         }
+
+        /**
+         * 添加二级菜单
+         */
+        function AddSec(id) {
+            $("#sort_id").val(id);
+            $("#menu_type").val(1);
+            $("#title").html('Sec');
+        }
+
+        /**
+         * 菜单管理  菜单树方法
+         */
+        function show (num) {
+            var table = document.getElementById('main' + num);
+
+            if (table.style.display == 'none') {
+                table.style.display = 'block';
+            } else {
+                table.style.display = 'none';
+            }
+        }
+
     </script>
 </block>

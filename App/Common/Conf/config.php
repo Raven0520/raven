@@ -2,6 +2,7 @@
 return array(
     //'配置项'=>'配置值'
     'URL_CASE_INSENSITIVE' => true,  //设置为true的时候表示URL地址不区分大小写
+    'SHOW_PAGE_TRACE' => true,     //使得页面底部显示跟踪信息
 
     //url访问模式为PathInfo模式
     'URL_MODEL' => '1',

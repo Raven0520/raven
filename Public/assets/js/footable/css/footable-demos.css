@@ -13,6 +13,9 @@ code {
     padding: 2px 5px;
     font-size: 11px;
 }
+.status-metro.status-add {
+    background: #65c3df;
+}
 .status-metro.status-active {
     background: #86C440;
 }
