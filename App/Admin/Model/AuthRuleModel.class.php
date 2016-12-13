@@ -22,10 +22,6 @@ class AuthRuleModel extends CommonModel
             1 == $result[$k]['menu_type'] && $result[$k]['menu_type'] = 'Sec Menu';
             2 == $result[$k]['menu_type'] && $result[$k]['menu_type'] = 'Win Menu';
 
-            0 == $result[$k]['menu_status'] && $result[$k]['menu_status'] = 'Disable';
-            1 == $result[$k]['menu_status'] && $result[$k]['menu_status'] = 'Active';
-            -1 == $result[$k]['menu_status'] && $result[$k]['menu_status'] = 'Del';
-            
         }
     }
 }

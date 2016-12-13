@@ -60,4 +60,18 @@ class EmptyController extends CommonController
         }
     }
 
+    /**
+     * 设置排序
+     */
+    public function ListOrder($id = null, $order = null){
+        IS_POST && $this->setListOrder(CONTROLLER_NAME,$order,array('id'=>$id));
+    }
+
+    /**
+     * 修改状态
+     */
+    public function Status($id = null , $status = null){
+        IS_POST && $this->setStatus(CONTROLLER_NAME, $status, array('id'=>$id));
+    }
+
 }

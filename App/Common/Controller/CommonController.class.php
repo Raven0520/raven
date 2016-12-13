@@ -192,4 +192,39 @@ class CommonController extends Controller
     {
         return $this->lists($model, $where, $field, $order, false);
     }
+
+    protected function setListOrder($model,$order,$where = array(),$msg = array('success' => '排序成功','error'=>'排序失败')){
+        $data['list_order'] = $order;
+        $data['edit_time'] = time();
+        $this->editRow($model,$data,$where,$msg);
+    }
+
+    protected function setStatus($model,$status,$where = array(), $msg = array('success' => '设置成功','error' => '设置失败')){
+        0 == $status ? $data['menu_status'] = 1 : $data['menu_status'] = 0;
+        $data['edit_time'] = time();
+        $this->editRow($model,$data,$where,$msg);
+    }
+
+    /**
+     * 修改表中的数据
+     * @param $model
+     * @param $data
+     * @param $where
+     * @param $msg
+     */
+    final protected function editRow($model = CONTROLLER_NAME, $data, $where, $msg)
+    {
+        $id = array_unique((array)I('id', 0));
+        $id = is_array($id) ? implode(',', $id) : $id;
+        $fields = M($model)->getDbFields();
+        if (in_array('id', $fields) && !empty($id)) {
+            $where = array_merge(array('id' => array('in', $id)), (array)$where);
+        }
+        $msg = array_merge(array('success' => '操作成功！', 'error' => '操作失败！', 'url' => '', 'ajax' => IS_AJAX), (array)$msg);
+        if (M($model)->where($where)->save($data) !== false) {
+            $this->success($msg['success'], $msg['url'], $msg['ajax']);
+        } else {
+            $this->error($msg['error'], $msg['url'], $msg['ajax']);
+        }
+    }
 }

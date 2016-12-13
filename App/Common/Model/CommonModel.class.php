@@ -11,9 +11,8 @@ use Think\Model\RelationModel;
 class CommonModel extends RelationModel
 {
     protected $_auto = array(
-//        array('shop_id', 'getSID', 1, 'function'),
         array('create_time', NOW_TIME, 1),
-        array('edit_time',NOW_TIME,1)
+        array('edit_time',NOW_TIME,2)
     );
 
     /**

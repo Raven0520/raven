@@ -31,38 +31,45 @@
                 <table id="responsive-example-table" class="table large-only">
                     <tbody>
                     <tr class="text-center">
+                        <th style="width:1%; text-align: center">List_Order</th>
                         <th style="width:12%; text-align: center">Type</th>
                         <th style="width:16%; text-align: center">Name</th>
                         <th style="width:12%; text-align: center">Icon</th>
                         <th style="width:12%; text-align: center">Control</th>
                     </tr>
                     <foreach name="menu" item="vo">
-                        <tr onclick="show('{$vo.id}')" style="cursor: pointer">
-                            <td style="width:12%; text-align: center">{$vo.menu_type}</td>
-                            <td style="width:16%; text-align: center">{$vo.title}</td>
-                            <td style="width:12%; text-align: center"><i class="{$vo.icon}"></i></td>
-                            <td style="width:12%; text-align: center">
+                        <tr>
+                            <td style="text-align: center">
+                                <input type="text" class="form-control" style="text-align: center; width: 30px; line-height: 10px; padding: 0;" value="{$vo.list_order}" onblur="Common.setListOrder('{$vo.id}',this.value)">
+                            </td>
+                            <td onclick="show('{$vo.id}')" style="width:12%; text-align: center;cursor: pointer;line-height: 30px;">{$vo.menu_type}</td>
+                            <td style="width:16%; text-align: center; line-height: 30px;">{$vo.title}</td>
+                            <td style="width:12%; text-align: center; line-height: 30px;"><i class="{$vo.icon}"></i></td>
+                            <td style="width:12%; text-align: center;">
                                 <a onclick="AddSec('{$vo.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
                                     <span class="status-metro status-add">Add Sec</span>
                                 </a>
-                                <span class="status-metro status-active">{$vo.menu_status}</span>
+                                <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="status-metro status-active" style="margin-top: 5px;">{$vo.menu_status|StatusName}</span>
                             </td>
                         </tr>
                         <tr style="display: table-row; border: none; padding: 0px;">
-                            <td colspan="7" style="padding: 0px; border: none;">
+                            <td colspan="5" style="padding: 0px; border: none;">
                                 <div id="main{$vo.id}" style="display: none">
                                     <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border: none;" class="datatable table table-striped table-hover">
                                         <tbody>
                                         <volist name="$vo[second]" id="sec">
                                             <tr>
-                                                <td style="width:12%; text-align: center">{$sec.menu_type}</td>
-                                                <td style="width:16%; text-align: center">{$sec.title}</td>
-                                                <td style="width:12%; text-align: center"><i class="{$sec.icon}"></i></td>
-                                                <td style="width:12%; text-align: center">
-                                                    <a onclick="AddSec('{$sec.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
+                                                <td style="width: 5%; text-align: center">
+                                                    <input class="form-control" value="{$sec.list_order}" style="text-align: center; width: 30px; padding: 0;" type="text" onblur="Common.setListOrder('{$sec.id}',this.value)">
+                                                </td>
+                                                <td style="width:12%; text-align: center; line-height: 30px;">{$sec.menu_type}</td>
+                                                <td style="width:16%; text-align: center; line-height: 30px;">{$sec.title}</td>
+                                                <td style="width:12%; text-align: center; line-height: 30px;"><i class="{$sec.icon}"></i></td>
+                                                <td style="width:12%; text-align: center;">
+                                                    <a href="#">
                                                         <span class="status-metro status-add">Add Sec</span>
                                                     </a>
-                                                    <span class="status-metro status-active">{$sec.menu_status}</span>
+                                                    <span onclick="Common.setStatus('{$sec.id}','{$sec.status}')" class="status-metro status-active" style="margin-top: 5px;">{$sec.menu_status|StatusName}</span>
                                                 </td>
                                             </tr>
                                         </volist>
@@ -124,6 +131,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">Modal</label>
+                                        <div class="col-sm-8">
+                                            <input name="name" class="form-control" type="text" placeholder="菜单位置">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button onclick="add()" type="button" class="btn btn-default pull-right"><i class="fa fa-plus">&nbsp;</i>Add
                                             </button>
@@ -143,8 +157,10 @@
 <block name="script">
     <script>
         var SCOPE = {
-            'add_url': '/AuthRule/add',
-            'jump_url': '/AuthRule'
+            'add_url'  : '{:U("add")}',
+            'jump_url' : '{:U("index")}',
+            'order_url': '{:U("ListOrder")}',
+            'status_url' : '{:U("Status")}'
         };
 
         function getIcon(icon) {
