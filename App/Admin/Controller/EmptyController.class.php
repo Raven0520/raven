@@ -47,6 +47,22 @@ class EmptyController extends CommonController
     }
 
     /**
+     * 获取需要修改的数据
+     * @param int $id
+     */
+    public function edit($id = 0){
+        $this->ajaxReturn($this->info($id));
+    }
+
+    /**
+     * 伪删除数据
+     * @param null $id
+     */
+    public function delete($id = null){
+        IS_POST && $this->del(CONTROLLER_NAME,array('id' => $id));
+    }
+
+    /**
      * 列表数据
      */
     public function index($where = null, $field = true, $model = CONTROLLER_NAME) {

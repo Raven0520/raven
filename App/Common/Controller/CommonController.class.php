@@ -227,4 +227,16 @@ class CommonController extends Controller
             $this->error($msg['error'], $msg['url'], $msg['ajax']);
         }
     }
+
+    /**
+     * 删除数据
+     * @param $model
+     * @param array $where
+     * @param array $msg
+     */
+    protected function del($model, $where = array(), $msg = array('success' => '删除成功！', 'error' => '删除失败！'))
+    {
+        $data['status'] = -1;
+        $this->editRow($model, $data, $where, $msg);
+    }
 }

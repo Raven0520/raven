@@ -35,3 +35,18 @@ function StatusName($status){
         return 'Del';
     }
 }
+
+/**
+ * 获取状态样式
+ */
+function StatusClass($status){
+    if ($status == 1){
+        return 'status-metro status-active';
+    }
+    if ($status == 0){
+        return 'status-metro status-suspended';
+    }
+    if ($status == -1){
+        return 'status-metro status-disabled';
+    }
+}
