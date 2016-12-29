@@ -5,45 +5,45 @@
  * 通用表单提交方法
  */
 Common = {
-    Submit : function () {
-        var data = $('#submitForm').serializeArray();
-        var formData = {};
-        $(data).each(function (i) {
-            formData[this.name] = this.value;
-        });
-        var url  = SCOPE.add_url;
+    /**
+     * 提交表单
+     * @constructor
+     */
+    Submit: function () {
+        var data = $('#submitForm').serialize();
+        var url = SCOPE.add_url;
         var jump = SCOPE.jump_url;
-
-        $.post(url,formData,function (res) {
-            if (res.status == 1){
-                return msg.success(res.info,jump);
+        console.log(url);
+        $.post(url, data, function (res) {
+            if (res.status == 1) {
+                return msg.success(res.info, jump);
             }
-            if (res.status == 0){
+            if (res.status == 0) {
                 return msg.error(res.info);
             }
-        },"JSON");
+        }, "JSON");
     },
 
     /**
      * 排序方法
      */
-    setListOrder : function (id,order) {
-        if (!order){
+    setListOrder: function (id, order) {
+        if (!order) {
             return msg.error('排序不能为空');
         }
-        if (order < 0){
+        if (order < 0) {
             return msg.error('排序不能小于0');
         }
 
         $.ajax({
-            type:"POST",
-            url : SCOPE.order_url,
-            data:{id:id , order:order},
-            success : function (res) {
-                if (res.status == 1){
-                    return msg.success(res.info,SCOPE.jump_url);
+            type: "POST",
+            url: SCOPE.order_url,
+            data: {id: id, order: order},
+            success: function (res) {
+                if (res.status == 1) {
+                    return msg.success(res.info, SCOPE.jump_url);
                 }
-                if (res.status == 0){
+                if (res.status == 0) {
                     return msg.error(res.info);
                 }
             }
@@ -53,16 +53,16 @@ Common = {
     /**
      * 修改状态
      */
-    setStatus : function (id,status) {
+    setStatus: function (id, status) {
         $.ajax({
-            type:"POST",
-            url : SCOPE.status_url,
-            data:{id:id , status:status},
-            success : function (res) {
-                if (res.status == 1){
-                    return msg.success(res.info,SCOPE.jump_url);
+            type: "POST",
+            url: SCOPE.status_url,
+            data: {id: id, status: status},
+            success: function (res) {
+                if (res.status == 1) {
+                    return msg.success(res.info, SCOPE.jump_url);
                 }
-                if (res.status == 0){
+                if (res.status == 0) {
                     return msg.error(res.info);
                 }
             }

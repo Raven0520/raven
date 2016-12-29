@@ -194,6 +194,33 @@ body {
     color: #818181;
 }
 
+.login-btn button{
+    background: #F45B4B;
+    padding: 8px 7px;
+    width: 20%;
+    color: #FFF;
+    font-size: 17px;
+    font-weight: 400;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-border-radius: 19px;
+    outline: none;
+    border: none;
+    margin: 0px 7px 0px 3px;
+}
+
+.login-btn button:hover{
+    background: #818181;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+}
+
+.login-btn{
+    text-align: center;
+}
+
 .forgot input[type="submit"] {
     background: #F45B4B;
     color: #FFF;
@@ -342,6 +369,11 @@ body {
         font-size: 23px;
     }
 
+    .login-btn button{
+        font-size: 15px;
+        width: 22%;
+    }
+
     .forgot input[type="submit"] {
         font-size: 15px;
         width: 22%;
@@ -401,6 +433,12 @@ body {
 @media (max-width: 320px) {
     .login {
         width: 90%;
+    }
+
+    .login-btn button{
+        font-size: 11px;
+        width: 25%;
+        padding: 6px 7px;
     }
 
     .login-top {
