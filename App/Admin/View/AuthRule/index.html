@@ -109,6 +109,7 @@
                             </div>
                             <div class="box-body">
                                 <form class="form-horizontal" role="form" id="submitForm">
+                                    <input type="hidden" name="id" id="id">
                                     <input type="hidden" name="sort_id" id="sort_id" value="0">
                                     <input type="hidden" name="menu_type" id="menu_type" value="0">
                                     <div class="form-group">
@@ -226,6 +227,7 @@
                         $('#icon').addClass(res.icon);
                         $('#rule').val(res.name);
                         $('#modal').val(res.modal);
+                        $('#id').val(res.id);
                         return;
                     }
                     return msg.error(res.info);

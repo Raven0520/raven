@@ -10,11 +10,6 @@ use Common\Model\CommonModel;
  */
 class AuthRuleModel extends CommonModel
 {
-    protected $_auto = array(
-        array('create_time', NOW_TIME, 1),
-        array('update_time',NOW_TIME,2)
-    );
-
     public function _after_select(&$result, $options)
     {
         foreach ($result as $k => $v){

@@ -1,0 +1,182 @@
+<extend name="Common/index"/>
+
+<block name="tool">
+    <a class="entypo-user-add" style="font-size: 18px; margin-right: 10px" data-toggle="modal" data-target="#add" title="Add User"></a>
+    <a href="/AuthGroup" class="fa fa-group" style="font-size: 18px;" title="Menage User Group"></a>
+</block>
+
+<block name="content_1">
+    <div class="col-sm-12">
+
+        <div class="nest" id="StackableClose">
+            <div class="title-alt">
+                <h6>
+                    {:CONTROLLER_NAME}</h6>
+                <div class="titleClose">
+                    <a class="gone" href="#tStackableClose">
+                        <span class="entypo-cancel"></span>
+                    </a>
+                </div>
+                <div class="titleToggle">
+                    <a class="nav-toggle-alt" href="#StackableStatic">
+                        <span class="entypo-up-open"></span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="body-nest" id="StackableStatic">
+
+                <table id="responsive-example-table" class="table large-only">
+                    <tbody>
+                    <tr class="text-center">
+                        <th style="width:30%; text-align: center">Group Name</th>
+                        <th style="width:40%; text-align: center">Rules</th>
+                        <th style="width:30%; text-align: center">Control</th>
+                    </tr>
+                    <foreach name="index" item="vo">
+                        <tr>
+                            <td style="width:30%; text-align: center; line-height: 30px;">{$vo.title}</td>
+                            <td style="width:40%; text-align: center; line-height: 30px;">{$vo.rules}</td>
+                            <td style="width:30%; text-align: center;">
+                                <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
+                                <a onclick="Edit('{$vo.id}')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
+                                <a onclick="Del('{$vo.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</block>
+
+<block name="modal-one">
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    <span id="action">Add</span>&nbsp;User
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <form class="form-horizontal" role="form" id="submitForm">
+                                    <input type="hidden" id="id" name="id">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Group</label>
+                                        <div class="col-sm-8">
+                                            <input id="title" title="组别名称" name="title" class="form-control" type="text" placeholder="组别名称">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Rule</label>
+                                        <div class="col-sm-8">
+                                            <input data-toggle="modal" data-target="#Rule-win" id="rules" name="rules" class="form-control" type="text"
+                                                   placeholder="组别规则">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button onclick="add()" type="button" class="btn btn-default pull-right"><i id="submit_icon" class="fa fa-plus">
+                                                &nbsp;</i>Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="/Public/assets/js/iCheck/jquery.icheck.js"></script>
+    <script>
+        var SCOPE = {
+            'add_url'  : '{:U("add")}',
+            'jump_url' : '{:U("index")}',
+            'order_url': '{:U("ListOrder")}',
+            'status_url' : '{:U("Status")}'
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            //CHECKBOX PRETTYFY
+            $('.skin-flat input').iCheck({
+                checkboxClass: 'icheckbox_flat-red'
+            });
+        });
+
+        function changeIcon() {
+            $('#submit_icon').removeClass().addClass('fa fa-plus');
+        }
+
+        function add() {
+            var title = $('#title').val();
+            if (!title){
+                return msg.error('组别名称不能为空');
+            }
+            var rule  = $('#rules').val();
+            if (!rule){
+                return msg.error('请选择规则');
+            }
+            Common.Submit();
+        }
+
+        function Edit(id) {
+            $('#action').html('Edit');
+            $('#submit_icon').removeClass().addClass('icon-document-edit');
+            var i;
+
+            $.ajax({
+                type : 'post',
+                url  : '{:U("Edit")}',
+                data : {id:id},
+                success : function (res) {
+                    if (res.status == 1){
+                        $('#title').val(res.title);
+                        $('#rules').val(res.rules);
+                        var rules = res.rules.split(',');
+                        for (i = 0; i < rules.length; i++){
+                            $('#'+ rules[i] +'').prop('checked',true);
+                        }
+                        return;
+                    }
+                    return msg.error(res.info);
+                }
+            })
+        }
+
+        function checkBlog(i) {
+            console.log(i);
+        }
+
+        function manageRule() {
+            var rules = [];
+            $('input:checked').each(function () {
+                rules.push($(this).val());
+            });
+            $('#rules').val(rules);
+            $('#Rule-win').modal('hide');
+        }
+
+
+    </script>
+</block>
