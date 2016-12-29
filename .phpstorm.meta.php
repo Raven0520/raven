@@ -12,6 +12,7 @@
 			'AuthRule' instanceof Admin\Model\AuthRuleModel,
 			'Common' instanceof Common\Model\CommonModel,
 			'Merge' instanceof Think\Model\MergeModel,
+			'AuthGroup' instanceof Admin\Model\AuthGroupModel,
 		],
 	];
 }

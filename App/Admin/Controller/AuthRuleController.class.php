@@ -35,4 +35,10 @@ class AuthRuleController extends EmptyController
 //        dump($sec);
         $this->ajaxReturn($sec);
     }
+
+    public function setStatus($model,$status,$where = array(), $msg = array('success' => '设置成功','error' => '设置失败')){
+        0 == $status ? $data['menu_status'] = 1 : $data['menu_status'] = 0;
+        $data['edit_time'] = time();
+        $this->editRow($model,$data,$where,$msg);
+    }
 }

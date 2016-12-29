@@ -157,12 +157,12 @@
 .config-wrap[title]:hover:after {
     font-size: 9px!important;
 }
-.widget-menu:before {
+.Blog:before {
     content:"Blog Menu" !important;
 }
 .design-kit:before {
     content:"Design Kit Menu" !important;
 }
-.component:before {
+.Control:before {
     content:"Control Menu" !important;
 }

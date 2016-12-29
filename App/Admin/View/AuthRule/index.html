@@ -1,9 +1,8 @@
 <extend name="Common/index"/>
 
 <block name="tool">
-    <a type="button" data-toggle="modal" data-target="#add" style="cursor: pointer" class="visible-lg">
-        <span class="entypo-plus-circled margin-iconic"></span>
-        Add Rule</a>
+    <a type="button" data-toggle="modal" data-target="#add" class="entypo-plus-circled" style="font-size: 18px; cursor: pointer; margin-right: 10px"></a>
+    <a title="Menage Auth Rule" href="/AuthGroup" class="icon-align-center" style="font-size: 18px;"></a>
 </block>
 
 <block name="content_1">
@@ -143,7 +142,7 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button onclick="add()" type="button" class="btn btn-default pull-right"><i class="fa fa-plus">&nbsp;</i>Add
+                                            <button onclick="add()" type="button" class="btn btn-default pull-right"><i id="submit_icon" class="fa fa-plus">&nbsp;</i>Submit
                                             </button>
                                         </div>
                                     </div>
@@ -201,7 +200,9 @@
         function AddSec(id) {
             $("#sort_id").val(id);
             $("#menu_type").val(1);
+            $('#action').html('Add');
             $("#title").html('Sec');
+            $('#submit_icon').removeClass().addClass('fa fa-plus');
         }
 
         /**
@@ -210,6 +211,7 @@
         function Edit(id,title) {
             $('#action').html('Edit');
             $("#title").html(title);
+            $('#submit_icon').removeClass().addClass('icon-document-edit');
 
             $.ajax({
                 type : 'post',

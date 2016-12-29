@@ -22,7 +22,20 @@ class CommonController extends Controller
 
     protected function _initialize()
     {
-
+        //注册菜单拦
+        $where = array('sort_id' => 0 , 'menu_status' => 1);
+        for ($i = 1; $i < 4; $i++){
+            $where['modal'] = $i;
+            $modal[$i] = D('AuthRule')->where($where)->order('list_order')->select();
+            foreach ($modal[$i] as $k => $v){
+                $name = 'second' . $modal[$i][$k]['id'];
+                $modal[$i][$k]['second'] = $name;
+                $sec_where = array('sort_id' => $modal[$i][$k]['id'], 'menu_status' => 1);
+                $data = $this->select('AuthRule',$sec_where,$field = true, $order = 'list_order');
+                $this->assign($name,$data);
+            }
+            $this->assign('modal'.$i,$modal[$i]);
+        }
     }
 
     /**
@@ -120,65 +133,6 @@ class CommonController extends Controller
         }
         return $model->field($field)->relation(true)->select();
     }
-    /*protected function lists($model = CONTROLLER_NAME, $where = array('status' => array('egt', 0)), $field = true, $order = '', $pages = 20)
-    {
-        $options = array();
-        $REQUEST = (array)I('request.');
-        if (is_string($model)) {
-            $model = D($model);
-        }
-        $OPT = new \ReflectionProperty($model, 'options');
-        $OPT->setAccessible(true);
-
-        //dump($OPT);
-        $pk = $model->getPk();
-        if (null == $order) {
-        } elseif (isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']), array('desc', 'asc'))) {
-            $options['order'] = '`' . $REQUEST['_field'] . '` ' . $REQUEST['_order'];
-        } elseif ($order === '' && empty($options['order']) && !empty($pk)) {
-            $options['order'] = $pk . ' desc';
-        } elseif ($order) {
-            $options['order'] = $order;
-        }
-        unset($REQUEST['_order'], $REQUEST['_field']);
-
-        if (!empty($where)) {
-            $options['where'] = $where;
-        }
-        $options = array_merge((array)$OPT->getValue($model), $options);
-        $model->setProperty('options', $options);
-        if (IS_POST && $pages) {
-            $pages = $this->pages;
-            if ($pages['rows']) {
-                $listRows = $pages['rows'];
-            } else {
-                $listRows = C('LIST_ROWS') > 0 ? C('LIST_ROWS') : 20;
-            }
-            $total = $model->where($options['where'])->count();
-            $options['limit'] = ($pages['page'] > 0 ? $listRows * ($pages['page'] - 1) : 0) . ',' . $listRows;
-            $model->setProperty('options', $options);
-            $data['total'] = $total;
-            $data['rows'] = $model->field($field)->relation(true)->select();
-            return $data;
-        } else if ($pages) {
-            $total = $model->where($options['where'])->count();
-            if (isset($REQUEST['r'])) {
-                $listRows = (int)$REQUEST['r'];
-            } else {
-                $listRows = C('LIST_ROWS') > 0 ? C('LIST_ROWS') : $pages;
-            }
-            $page = new \Think\Page($total, $listRows);
-            if ($total > $listRows) {
-                $page->setConfig('theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
-            }
-            $p = $page->show();
-            $this->assign('_page', $p ? $p : '');
-            $this->assign('_total', $total);
-            $options['limit'] = $page->firstRow . ',' . $page->listRows;
-            $model->setProperty('options', $options);
-        }
-        return $model->field($field)->relation(true)->select();
-    }*/
 
     /**
      * 列表数据，不带分页
@@ -200,7 +154,7 @@ class CommonController extends Controller
     }
 
     protected function setStatus($model,$status,$where = array(), $msg = array('success' => '设置成功','error' => '设置失败')){
-        0 == $status ? $data['menu_status'] = 1 : $data['menu_status'] = 0;
+        0 == $status ? $data['status'] = 1 : $data['status'] = 0;
         $data['edit_time'] = time();
         $this->editRow($model,$data,$where,$msg);
     }
