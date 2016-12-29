@@ -11,7 +11,4 @@ namespace Admin\Controller;
 
 class AuthGroupController extends EmptyController
 {
-    public function index(){
-        $this->_index();
-    }
 }

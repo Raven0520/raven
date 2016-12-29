@@ -50,3 +50,11 @@ function StatusClass($status){
         return 'status-metro status-disabled';
     }
 }
+
+/**
+ * 密码加密
+ */
+function getMD5($password){
+    $pwd = md5(C('MD5_PRE').md5($password.C('MD5_POS')));
+    return $pwd;
+}

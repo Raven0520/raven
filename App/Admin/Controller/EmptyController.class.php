@@ -69,7 +69,7 @@ class EmptyController extends CommonController
     /**
      * 列表数据
      */
-    public function index($where = null, $field = true, $model = CONTROLLER_NAME)
+    public function _index($where = null, $field = true, $model = CONTROLLER_NAME)
     {
         if (IS_POST) {
             '' != I('id') && $this->where['id'] = array('like', '%' . (string)I('id') . '%');
@@ -84,7 +84,7 @@ class EmptyController extends CommonController
     /**
      * 列表数据  assign
      */
-    public function _index($where = null, $field = true, $model = CONTROLLER_NAME)
+    public function index($where = null, $field = true, $model = CONTROLLER_NAME)
     {
         $this->assign('index', $this->lists($model, $where ? array_merge($this->where, $where) : $this->where, $field));
         $this->display();

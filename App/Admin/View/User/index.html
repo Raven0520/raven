@@ -1,7 +1,7 @@
 <extend name="Common/index"/>
 
 <block name="tool">
-    <a class="entypo-user-add" style="font-size: 18px; margin-right: 10px" data-toggle="modal" data-target="#add" title="Add User"></a>
+    <a class="entypo-user-add" style="font-size: 18px; margin-right: 10px" data-toggle="modal" data-target="#add" title="Add User" onclick="changeIcon()"></a>
     <a href="/AuthGroup" class="fa fa-group" style="font-size: 18px;" title="Menage User Group"></a>
 </block>
 
@@ -30,14 +30,16 @@
                 <table id="responsive-example-table" class="table large-only">
                     <tbody>
                     <tr class="text-center">
-                        <th style="width:30%; text-align: center">Group Name</th>
-                        <th style="width:40%; text-align: center">Rules</th>
+                        <th style="width:20%; text-align: center">Username</th>
+                        <th style="width:20%; text-align: center">Nickname</th>
+                        <th style="width:20%; text-align: center">Tel</th>
                         <th style="width:30%; text-align: center">Control</th>
                     </tr>
                     <foreach name="index" item="vo">
                         <tr>
-                            <td style="width:30%; text-align: center; line-height: 30px;">{$vo.title}</td>
-                            <td style="width:40%; text-align: center; line-height: 30px;">{$vo.rules}</td>
+                            <td style="width:20%; text-align: center; line-height: 30px;">{$vo.username}</td>
+                            <td style="width:20%; text-align: center; line-height: 30px;">{$vo.nickname}</td>
+                            <td style="width:20%; text-align: center; line-height: 30px;">{$vo.tel}</td>
                             <td style="width:30%; text-align: center;">
                                 <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
                                 <a onclick="Edit('{$vo.id}')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
@@ -74,17 +76,42 @@
                                 <form class="form-horizontal" role="form" id="submitForm">
                                     <input type="hidden" id="id" name="id">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Group</label>
+                                        <label class="col-sm-3 control-label">Username</label>
                                         <div class="col-sm-8">
-                                            <input id="title" title="组别名称" name="title" class="form-control" type="text" placeholder="组别名称">
+                                            <input id="username" title="用户名" name="username" class="form-control" type="text" placeholder="用户名">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Rule</label>
+                                        <label class="col-sm-3 control-label">Password</label>
                                         <div class="col-sm-8">
-                                            <input data-toggle="modal" data-target="#Rule-win" id="rules" name="rules" class="form-control" type="text"
-                                                   placeholder="组别规则">
+                                            <input id="password" title="登陆密码" name="password" class="form-control" type="text" placeholder="登陆密码">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Nickname</label>
+                                        <div class="col-sm-8">
+                                            <input id="nickname" title="昵称" name="nickname" class="form-control" type="text" placeholder="昵称">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Tel</label>
+                                        <div class="col-sm-8">
+                                            <input id="tel" title="电话" name="tel" class="form-control" type="text" placeholder="电话">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Group</label>
+                                        <div class="col-sm-8">
+                                            <select id="group_id" name="group_id" class="form-control">
+                                                <option value="0">请选择权限组别</option>
+                                                <foreach name="group" item="vo">
+                                                    <option value="{$vo.id}">{$vo.title}</option>
+                                                </foreach>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -117,25 +144,24 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
-            //CHECKBOX PRETTYFY
-            $('.skin-flat input').iCheck({
-                checkboxClass: 'icheckbox_flat-red'
-            });
-        });
 
         function changeIcon() {
             $('#submit_icon').removeClass().addClass('fa fa-plus');
         }
 
         function add() {
-            var title = $('#title').val();
-            if (!title){
-                return msg.error('组别名称不能为空');
+            var username = $('#username').val();
+            if (!username){
+                return msg.error('用户名称不能为空');
             }
-            var rule  = $('#rules').val();
-            if (!rule){
-                return msg.error('请选择规则');
+            var password  = $('#password').val();
+            var id = $('#id').val();
+            if (!password && !id){
+                return msg.error('密码不能为空');
+            }
+
+            if (!$('#group_id').val()){
+                return msg.error('请选择组别');
             }
             Common.Submit();
         }
@@ -151,32 +177,17 @@
                 data : {id:id},
                 success : function (res) {
                     if (res.status == 1){
-                        $('#title').val(res.title);
-                        $('#rules').val(res.rules);
-                        var rules = res.rules.split(',');
-                        for (i = 0; i < rules.length; i++){
-                            $('#'+ rules[i] +'').prop('checked',true);
-                        }
+                        $('#id').val(res.id);
+                        $('#username').val(res.username);
+                        $('#nickname').val(res.nickname);
+                        $('#tel').val(res.tel);
+                        var group_id = parseInt(res.group_id);
+                        $("#group_id option[value="+ group_id +"]").attr("selected",true);
                         return;
                     }
                     return msg.error(res.info);
                 }
             })
         }
-
-        function checkBlog(i) {
-            console.log(i);
-        }
-
-        function manageRule() {
-            var rules = [];
-            $('input:checked').each(function () {
-                rules.push($(this).val());
-            });
-            $('#rules').val(rules);
-            $('#Rule-win').modal('hide');
-        }
-
-
     </script>
 </block>
