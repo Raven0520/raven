@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
     <title>Login</title>
     <!-- Custom Theme files -->
@@ -8,8 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="keywords"
-          content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
+    <meta name="keywords" content="raven"/>
     <!--Google Fonts-->
 
     <!--Google Fonts-->
@@ -22,7 +21,7 @@
             <input name="password" type="password" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">
         </form>
         <div class="login-btn">
-            <button class="login-btn" type="button" onclick="Common.Submit()">Login</button>
+            <button class="login-btn" type="button" id="loginBtn" onclick="Common.Submit()">Login</button>
         </div>
     </div>
 </div>
@@ -32,6 +31,14 @@
         'add_url'  : '{:U("/User/Login")}',
         'jump_url' : '/'
     };
+
+    document.onkeydown = function (e) {
+        var e = window.event ? window.event : e;
+        if (e.keyCode == 13){
+            var btn = document.getElementById("loginBtn");
+            btn.onclick();
+        }
+    }
 </script>
 
 </body>

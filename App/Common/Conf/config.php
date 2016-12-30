@@ -16,7 +16,8 @@ return array(
     //域名部署
     'APP_SUB_DOMAIN_DEPLOY' => 1,
     'APP_SUB_DOMAIN_RULES' => array(
-        'r.raven.com' => 'Admin'
+        'r.raven.com' => 'Admin',
+        'r.raven.pub' => 'Admin'
     ),
 
     //引用文件路径设置
