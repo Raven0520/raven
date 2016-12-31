@@ -11,9 +11,19 @@ use Common\Model\CommonModel;
 
 class UserModel extends CommonModel
 {
+    protected $_validate = array(
+        array('username','','用户名已存在',0,'unique',1) //在新增的时候验证用户名是否唯一
+    );
+
     public function _before_insert(&$data, $options)
     {
         $data['password'] = getMD5($data['password']);
+    }
+    public function _after_insert($data, $options)
+    {
+        $access['uid'] = $data['id'];
+        $access['group_id'] = $data['group_id'];
+        M('auth_group_access')->add($access);
     }
 
     public function _before_update(&$data, $options)
@@ -23,5 +33,11 @@ class UserModel extends CommonModel
         }else {
             $data['password'] = getMD5($data['password']);
         }
+    }
+
+    public function _after_update($data, $options)
+    {
+        $access['group_id'] = $data['group_id'];
+        M('auth_group_access')->where(array('uid'=>$data['id']))->save($access);
     }
 }
