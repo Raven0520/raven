@@ -17,7 +17,7 @@ class UserController extends EmptyController
     }
 
     public function Login($username,$password){
-        $res = M(CONTROLLER_NAME)->where(array('username'=>$username))->field('nickname,tel,password,status')->find();
+        $res = M(CONTROLLER_NAME)->where(array('username'=>$username))->field('id,nickname,tel,password,status')->find();
         $this->res['status'] = 0;
         if (empty($res)){
             $this->res['info'] = '用户名不存在';

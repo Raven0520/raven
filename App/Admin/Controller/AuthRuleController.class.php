@@ -8,7 +8,6 @@
 
 namespace Admin\Controller;
 
-
 class AuthRuleController extends EmptyController
 {
     public function index()

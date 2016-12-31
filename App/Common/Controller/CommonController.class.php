@@ -1,5 +1,6 @@
 <?php
 namespace Common\Controller;
+use Think\Auth;
 use Think\Controller;
 
 /**
@@ -19,6 +20,9 @@ class CommonController extends Controller
     protected $model = '';
 
     protected $res = array('status' => 1, 'info' => '操作成功');
+    protected $auth = false;
+
+    protected $user = '';
 
     protected function _initialize()
     {
@@ -35,6 +39,15 @@ class CommonController extends Controller
                 $this->assign($name,$data);
             }
             $this->assign('modal'.$i,$modal[$i]);
+        }
+        $this->user = session('user');
+
+        //判断用户是否有权限
+        $auth = new Auth();
+        $this->auth = $auth->check('/'.CONTROLLER_NAME.'/'.ACTION_NAME,$this->user['id']);
+        dump($this->auth);
+        if ($this->auth == false){
+            redirect(U('/PermissionDenied'));
         }
     }
 
