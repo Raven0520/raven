@@ -5,6 +5,6 @@
         <button type="button" class="close" data-dismiss="alert">×</button>
         <span class="tittle-alert entypo-info-circled"></span>
         Welcome back,&nbsp;
-        <strong>Dave mattew!</strong>&nbsp;&nbsp;Your last sig in at Yesterday, 16:54 PM
+        <strong>{$user.nickname}</strong>&nbsp;&nbsp;Your last sig in at <span>{$user.login_time|date="Y-m-d H:i",###}</span>
     </div>
 </block>

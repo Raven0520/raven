@@ -45,7 +45,7 @@ class CommonController extends Controller
             $this->assign('modal'.$i,$modal[$i]);
         }
         $this->user = session('user');
-
+        $this->assign('user',$this->user);
         //判断用户是否有权限
         $auth = new Auth();
         $action = ACTION_NAME;
