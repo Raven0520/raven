@@ -37,8 +37,10 @@ class UserModel extends CommonModel
 
     public function _after_update($data, $options)
     {
-        $access['uid'] = $data['id'];
-        $access['group_id'] = $data['group_id'];
-        D('auth_group_access')->update($access);
+        if ($data['group_id']){
+            $access['uid'] = $data['id'];
+            $access['group_id'] = $data['group_id'];
+            D('auth_group_access')->update($access);
+        }
     }
 }

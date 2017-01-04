@@ -161,6 +161,34 @@
 
 <include file="Common/footer"/>
 
+<block name="scope">
+    <script>
+        var SCOPE = {
+            'add_url': '{:U("add")}',
+            'jump_url': '{:U("index")}',
+            'order_url': '{:U("ListOrder")}',
+            'status_url': '{:U("Status")}'
+        };
+
+        /**
+         * 删除菜单
+         */
+        function Del(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{:U("delete")}',
+                data: {id: id},
+                success: function (res) {
+                    if (res.status == 1) {
+                        return msg.success(res.info, '{:U("index")}');
+                    }
+                    return msg.error(res.info);
+                }
+            })
+        }
+    </script>
+</block>
+
 <block name="script"></block>
 </body>
 

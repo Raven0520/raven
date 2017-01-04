@@ -1,7 +1,7 @@
 <extend name="Common/index"/>
 
 <block name="tool">
-    <a type="button" data-toggle="modal" data-target="#add" class="entypo-plus-circled" style="font-size: 18px; cursor: pointer; margin-right: 10px"></a>
+    <a type="button" data-toggle="modal" data-target="#add" class="icon icon-plus" style="font-size: 18px; cursor: pointer; margin-right: 10px"></a>
     <a title="Menage Auth Rule" href="/AuthGroup" class="icon-align-center" style="font-size: 18px;"></a>
 </block>
 
@@ -202,12 +202,6 @@
 
 <block name="script">
     <script>
-        var SCOPE = {
-            'add_url': '{:U("add")}',
-            'jump_url': '{:U("index")}',
-            'order_url': '{:U("ListOrder")}',
-            'status_url': '{:U("Status")}'
-        };
 
         function getIcon(icon) {
             $('#icon').addClass(icon);
@@ -309,23 +303,6 @@
                         $('#modal').val(res.modal);
                         $('#id').val(res.id);
                         return;
-                    }
-                    return msg.error(res.info);
-                }
-            })
-        }
-
-        /**
-         * 删除菜单
-         */
-        function Del(id) {
-            $.ajax({
-                type: 'POST',
-                url: '{:U("delete")}',
-                data: {id: id},
-                success: function (res) {
-                    if (res.status == 1) {
-                        return msg.success(res.info, '{:U("index")}');
                     }
                     return msg.error(res.info);
                 }
