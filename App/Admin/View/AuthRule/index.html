@@ -265,7 +265,7 @@
          */
         function showNodes(id) {
             $('#sec_id').val(id);
-            var i = 0;
+            var i;
             $.ajax({
                 type : 'POST',
                 url  : "{:U('getRules')}",

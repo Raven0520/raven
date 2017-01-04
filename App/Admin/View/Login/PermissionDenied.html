@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>您没有权限访问该页面</title>
+    <link rel="stylesheet" href="/Public/assets/css/loader-style.css">
+    <script type="text/javascript" src="/Public/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/Public/js/dialog/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/msg.js"></script>
+    <script>
+        $(document).ready(function () {
+//            return msg.success('您没有访问该页面或功能的权限','/');
+        })
+    </script>
 </head>
-<body>
-<h3>您没有访问权限</h3>
+<body style="background-color: #000">
+<img src="/Public/images/sorry.jpg" style="margin-left: 30%; margin-top: 100px">
+<h3 style="color: #FFF; margin-left: 40%">您没有访问该页面或功能的权限</h3>
+<h3 style="margin-left: 40%"><a href="/" style="color: #FFF"><i class="icon icon-home" style="color: #FFF"></i>返回首页</a></h3>
 </body>
 </html>

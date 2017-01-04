@@ -106,11 +106,11 @@
 </block>
 
 <block name="modal-two">
-    <div class="modal fade" id="Rule-win" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+    <div class="modal fade" id="Rule-win" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 5%;" aria-hidden="true">
         <div class="modal-dialog" role="document" style="width: 600px;">
             <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
                 <div class="row" style="margin-top: 25px;">
-                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                    <div class="col-md-12 pre-scrollable" style="width: 94%; margin-left: 3%; max-height: 600px">
                         <!-- BOX -->
                         <div class="box">
                             <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
@@ -126,12 +126,12 @@
                                             <ul class="list">
                                                 <li>
                                                     <input tabindex="13" type="checkbox" id="{$modal_one.id}" value="{$modal_one.id}">
-                                                    <label for="{$modal_one.id}">{$modal_one.title}<span style="color: red">*</span></label>
+                                                    <label for="{$modal_one.id}" >{$modal_one.title}<span style="color: red">*</span></label>
                                                     <ul style="margin-left: -40px">
                                                         <volist name="$modal_one[second]" id="one">
-                                                            <li>
+                                                            <li id="sec{$one.id}">
                                                                 <input tabindex="13" type="checkbox" id="{$one.id}" value="{one.id}">
-                                                                <label for="{$one.id}">{$one.title}</label>
+                                                                <label for="{$one.id}" onclick="getRules('{$one.id}')">{$one.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>
@@ -148,9 +148,9 @@
                                                     <label for="{$modal_two.id}">{$modal_two.title}<span style="color: red">*</span></label>
                                                     <ul style="margin-left: -40px">
                                                         <volist name="$modal_two[second]" id="two">
-                                                            <li>
+                                                            <li id="sec{two.id}">
                                                                 <input tabindex="13" type="checkbox" id="{$two.id}" value="{$two.id}">
-                                                                <label for="{$two.id}">{$two.title}</label>
+                                                                <label for="{$two.id}" onclick="getRules('{$two.id}')">{$two.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>
@@ -167,9 +167,9 @@
                                                     <label for="{$modal_thr.id}">{$modal_thr.title}<span style="color: red">*</span></label>
                                                     <ul style="margin-left: -40px">
                                                         <volist name="$modal_thr[second]" id="thr">
-                                                            <li>
+                                                            <li id="sec{$thr.id}">
                                                                 <input tabindex="13" name="Control" type="checkbox" id="{$thr.id}" value="{$thr.id}">
-                                                                <label for="{$thr.id}">{$thr.title}</label>
+                                                                <label for="{$thr.id}" onclick="getRules('{$thr.id}')">{$thr.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>
@@ -209,10 +209,14 @@
     <script>
         $(document).ready(function () {
             //CHECKBOX PRETTYFY
+            changeCheckbox();
+        });
+
+        function changeCheckbox() {
             $('.skin-flat input').iCheck({
                 checkboxClass: 'icheckbox_flat-red'
             });
-        });
+        }
 
         function changeIcon() {
             $('#submit_icon').removeClass().addClass('fa fa-plus');
@@ -231,6 +235,7 @@
         }
 
         function Edit(id) {
+            $('#id').val(id);
             $('#action').html('Edit');
             $('#submit_icon').removeClass().addClass('icon-document-edit');
             var i;
@@ -247,17 +252,35 @@
                         for (i = 0; i < rules.length; i++){
                             $('#'+ rules[i] +'').prop('checked',true);
                         }
+                        changeCheckbox();
                         return;
                     }
                     return msg.error(res.info);
                 }
             })
         }
-        
-        function checkBlog(i) {
-            console.log(i);
+
+        function getRules(id) {
+            var i;
+            $.ajax({
+                type : 'POST',
+                url  : "{:U('/AuthRule/getRules')}",
+                data : {sort_id:id},
+                success : function (res) {
+
+                    for (i=0; i<res.length; i++){
+                        $('#rule'+res[i].id).remove();
+                        var li = '<li id="rule'+ res[i].id +'">' +
+                                '<input tabindex="13" name="Control" type="checkbox" id="'+ res[i].id +'" value="'+ res[i].id +'">' +
+                                '<label for="'+ res[i].id +'">'+ res[i].title +'</label>' +
+                                '</li>';
+                        $("#sec"+ id).append(li);
+                    }
+                    changeCheckbox();
+                }
+            })
         }
-        
+
         function manageRule() {
             var rules = [];
             $('input:checked').each(function () {

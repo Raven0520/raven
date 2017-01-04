@@ -13,7 +13,6 @@ Common = {
         var data = $('#submitForm').serialize();
         var url = SCOPE.add_url;
         var jump = SCOPE.jump_url;
-        console.log(url);
         $.post(url, data, function (res) {
             if (res.status == 1) {
                 return msg.success(res.info, jump);

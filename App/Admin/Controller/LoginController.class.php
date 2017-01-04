@@ -41,4 +41,9 @@ class LoginController extends Controller
         }
         $this->ajaxReturn($this->res);
     }
+
+    public function loginOut(){
+        session('user',null);
+        redirect('/login');
+    }
 }
