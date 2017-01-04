@@ -28,7 +28,7 @@ class EmptyController extends CommonController
 
     public function _empty()
     {
-        $this->display(CONTROLLER_NAME);
+        $this->display('/'.CONTROLLER_NAME.'/'.ACTION_NAME);
     }
 
     /**

@@ -5,11 +5,16 @@
 	$STATIC_METHOD_TYPES = [
 
 		\D('') => [
-			'Adv' instanceof Think\Model\AdvModel,
 			'Mongo' instanceof Think\Model\MongoModel,
+			'Configure' instanceof Admin\Model\ConfigureModel,
 			'View' instanceof Think\Model\ViewModel,
-			'Relation' instanceof Think\Model\RelationModel,
+			'Code' instanceof Admin\Model\CodeModel,
 			'AuthRule' instanceof Admin\Model\AuthRuleModel,
+			'Img' instanceof Admin\Model\ImgModel,
+			'Mark' instanceof Admin\Model\MarkModel,
+			'AuthGroupAccess' instanceof Admin\Model\AuthGroupAccessModel,
+			'Adv' instanceof Think\Model\AdvModel,
+			'Relation' instanceof Think\Model\RelationModel,
 			'User' instanceof Admin\Model\UserModel,
 			'Common' instanceof Common\Model\CommonModel,
 			'Merge' instanceof Think\Model\MergeModel,
