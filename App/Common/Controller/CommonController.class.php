@@ -46,11 +46,12 @@ class CommonController extends Controller
         $auth = new Auth();
         $this->auth = $auth->check('/'.CONTROLLER_NAME.'/'.ACTION_NAME,$this->user['id']);
 //        echo '/'.CONTROLLER_NAME.'/'.ACTION_NAME;exit();
+        1 == $this->user['id'] && $this->auth = true;
         if ($this->auth == false){
             if (empty($this->user)){
                 return redirect('/login');
             }
-            redirect(U('/admin/PermissionDenied'));
+            redirect(U('/Login/PermissionDenied'));
         }
     }
 

@@ -13,12 +13,12 @@ class AuthRuleController extends EmptyController
     public function index()
     {
         $this->where['sort_id'] = 0;
-        $menu = $this->select(CONTROLLER_NAME,$this->where);
+        $menu = $this->select(CONTROLLER_NAME,$this->where,true,'list_order');
         foreach ($menu as $k => $v){
             $name = 'sec' . $menu[$k]['id'];
             $menu[$k]['second'] = $name;
             $this->where['sort_id'] = $menu[$k]['id'];
-            $data = $this->select(CONTROLLER_NAME,$this->where);
+            $data = $this->select(CONTROLLER_NAME,$this->where,true,'list_order');
             $this->assign($name,$data);
         }
         $this->assign('menu',$menu);
@@ -28,12 +28,19 @@ class AuthRuleController extends EmptyController
     /**
      * 获取二级菜单
      */
-    public function getSecMenu($sort_id){
+    public function getRules($sort_id){
         $this->where['sort_id'] = $sort_id;
         $sec = $this->select(CONTROLLER_NAME,$this->where);
 //        dump($sec);
         $this->ajaxReturn($sec);
     }
+
+    /**
+     * @param $model
+     * @param $status
+     * @param array $where
+     * @param array $msg
+     */
 
     public function setStatus($model,$status,$where = array(), $msg = array('success' => '设置成功','error' => '设置失败')){
         0 == $status ? $data['menu_status'] = 1 : $data['menu_status'] = 0;

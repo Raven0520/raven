@@ -39,7 +39,8 @@
                     <foreach name="menu" item="vo">
                         <tr>
                             <td style="text-align: center">
-                                <input type="text" class="form-control" style="text-align: center; width: 30px; line-height: 10px; padding: 0;" value="{$vo.list_order}" onblur="Common.setListOrder('{$vo.id}',this.value)">
+                                <input type="text" class="form-control" style="text-align: center; width: 30px; line-height: 10px; padding: 0;"
+                                       value="{$vo.list_order}" onblur="Common.setListOrder('{$vo.id}',this.value)">
                             </td>
                             <td onclick="show('{$vo.id}')" style="width:12%; text-align: center;cursor: pointer;line-height: 30px;">{$vo.menu_type}</td>
                             <td style="width:16%; text-align: center; line-height: 30px;">{$vo.title}</td>
@@ -49,29 +50,34 @@
                                     <span class="status-metro status-add">Add Sec</span>
                                 </a>
                                 <span onclick="Common.setStatus('{$vo.id}','{$vo.menu_status}')" class="{$vo.menu_status|StatusClass}" style="margin-top: 5px;">{$vo.menu_status|StatusName}</span>
-                                <a onclick="Edit('{$vo.id}','Main')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
+                                <a onclick="Edit('{$vo.id}','Main')" class="status-metro status-disabled" data-toggle="modal" data-target="#add"
+                                   style="cursor: pointer">Edit</a>
                                 <a onclick="Del('{$vo.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
                             </td>
                         </tr>
                         <tr style="display: table-row; border: none; padding: 0px;">
                             <td colspan="5" style="padding: 0px; border: none;">
                                 <div id="main{$vo.id}" style="display: none">
-                                    <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border: none;" class="datatable table table-striped table-hover">
+                                    <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border: none;"
+                                           class="datatable table table-striped table-hover">
                                         <tbody>
                                         <volist name="$vo[second]" id="sec">
                                             <tr>
                                                 <td style="width: 5%; text-align: center">
-                                                    <input class="form-control" value="{$sec.list_order}" style="text-align: center; width: 30px; padding: 0;" type="text" onblur="Common.setListOrder('{$sec.id}',this.value)">
+                                                    <input class="form-control" value="{$sec.list_order}" style="text-align: center; width: 30px; padding: 0;"
+                                                           type="text" onblur="Common.setListOrder('{$sec.id}',this.value)">
                                                 </td>
                                                 <td style="width:8%; text-align: center; line-height: 30px;">{$sec.menu_type}</td>
                                                 <td style="width:18%; text-align: center; line-height: 30px;">{$sec.title}</td>
                                                 <td style="width:10%; text-align: center; line-height: 30px;"><i class="{$sec.icon}"></i></td>
                                                 <td style="width:12%; text-align: center;">
-                                                    <a onclick="AddNode('{$sec.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
+                                                    <a onclick="showNodes('{$sec.id}')" data-toggle="modal" data-target="#Nodes" style="cursor: pointer">
                                                         <span class="status-metro status-add">Add Node</span>
                                                     </a>
-                                                    <span onclick="Common.setStatus('{$sec.id}','{$sec.menu_status}')" class="{$sec.menu_status|StatusClass}" style="margin-top: 5px;">{$sec.menu_status|StatusName}</span>
-                                                    <a onclick="Edit('{$sec.id}','Sec')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
+                                                    <span onclick="Common.setStatus('{$sec.id}','{$sec.menu_status}')" class="{$sec.menu_status|StatusClass}"
+                                                          style="margin-top: 5px;">{$sec.menu_status|StatusName}</span>
+                                                    <a onclick="Edit('{$sec.id}','Sec')" class="status-metro status-disabled" data-toggle="modal"
+                                                       data-target="#add" style="cursor: pointer">Edit</a>
                                                     <a onclick="Del('{$sec.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
                                                 </td>
                                             </tr>
@@ -95,6 +101,41 @@
 </block>
 
 <block name="modal-one">
+    <div class="modal fade" id="Nodes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    Nodes
+                                    <a onclick="AddNode()" data-toggle="modal" data-target="#add"><i class="icon icon-plus pull-right"></i></a>
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <input type="hidden" id="sec_id">
+                                <table class="table small-only" id="table_node">
+                                    <tbody>
+                                    <tr>
+                                        <td style="padding-left: 5%">title</td>
+                                        <td>rules</td>
+                                        <td>control</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="modal-two">
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
         <div class="modal-dialog" role="document" style="width: 480px;">
             <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
@@ -143,7 +184,8 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button onclick="add()" type="button" class="btn btn-default pull-right"><i id="submit_icon" class="fa fa-plus">&nbsp;</i>Submit
+                                            <button onclick="add()" type="button" class="btn btn-default pull-right"><i id="submit_icon" class="fa fa-plus">
+                                                &nbsp;</i>Submit
                                             </button>
                                         </div>
                                     </div>
@@ -161,10 +203,10 @@
 <block name="script">
     <script>
         var SCOPE = {
-            'add_url'  : '{:U("add")}',
-            'jump_url' : '{:U("index")}',
+            'add_url': '{:U("add")}',
+            'jump_url': '{:U("index")}',
             'order_url': '{:U("ListOrder")}',
-            'status_url' : '{:U("Status")}'
+            'status_url': '{:U("Status")}'
         };
 
         function getIcon(icon) {
@@ -209,7 +251,8 @@
         /**
          * 添加功能性节点
          */
-        function AddNode(id) {
+        function AddNode() {
+            var id = $("#sec_id").val();
             $("#sort_id").val(id);
             $("#menu_type").val(2);
             $('#action').html('Add');
@@ -218,19 +261,45 @@
         }
 
         /**
+         * 显示节点详情
+         */
+        function showNodes(id) {
+            $('#sec_id').val(id);
+            var i = 0;
+            $.ajax({
+                type : 'POST',
+                url  : "{:U('getRules')}",
+                data : {sort_id:id},
+                success : function (res) {
+//                    console.log(res);
+                    $("#table_node tr:gt(0)").remove();
+                    for (i=0; i<res.length; i++){
+                        var tr = '<tr>' +
+                                '<td style="padding-left: 5%">'+ res[i].title +'</td>' +
+                                '<td>'+ res[i].name +'</td>' +
+                                '<td><a onclick="Edit('+ res[i].id +','+ this.title +')" title="Nodes" class="status-metro status-disabled" data-target="#add" data-toggle="modal" data-dismiss="modal" style="cursor: pointer">Edit</a></td>' +
+                                '</tr>';
+                        $('#table_node').append(tr);
+                    }
+                }
+            })
+        }
+
+        /**
          *  编辑菜单
          */
-        function Edit(id,title) {
+        function Edit(id, title) {
+            console.log(title);
             $('#action').html('Edit');
             $("#title").html(title);
             $('#submit_icon').removeClass().addClass('icon-document-edit');
 
             $.ajax({
-                type : 'post',
-                url  : '{:U("Edit")}',
-                data : {id:id},
-                success : function (res) {
-                    if (res.status == 1){
+                type: 'post',
+                url: '{:U("Edit")}',
+                data: {id: id},
+                success: function (res) {
+                    if (res.status == 1) {
                         $('#sort_id').val(res.sort_id);
                         $('#menu_type').val(res.menu_type);
                         $('#name').val(res.title);
@@ -251,22 +320,22 @@
          */
         function Del(id) {
             $.ajax({
-                type : 'POST',
-                url  : '{:U("delete")}',
-                data : {id:id},
-                success : function (res) {
-                    if (res.status == 1){
-                        return msg.success(res.info,'{:U("index")}');
+                type: 'POST',
+                url: '{:U("delete")}',
+                data: {id: id},
+                success: function (res) {
+                    if (res.status == 1) {
+                        return msg.success(res.info, '{:U("index")}');
                     }
                     return msg.error(res.info);
                 }
             })
         }
-        
+
         /**
          * 菜单管理  菜单树方法
          */
-        function show (num) {
+        function show(num) {
             var table = document.getElementById('main' + num);
 
             if (table.style.display == 'none') {

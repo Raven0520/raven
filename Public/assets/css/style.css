@@ -11,7 +11,7 @@
     font-family:'FontAwesome', sans-serif;
 }
 body {
-    color: #9ea7b3!important;
+    color: #555!important;
     font-family:"Open Sans", Arial, sans-serif!important;
     font-size: 13px!important;
     line-height: 20px;
@@ -433,7 +433,7 @@ input:-webkit-autofill, textarea:-webkit-autofill {
     border: 1px solid !important;
     border-radius: 4px;
     box-shadow: none !important;
-    color: #C7D5E0 !important;
+    color: #555 !important;
     font-size: 13px !important;
     height: 31px !important;
 }
@@ -1778,7 +1778,6 @@ ul.topnav h4 {
     font-weight: normal;
     padding: 0 12px;
     position: relative;
-    text-transform: uppercase;
     top: 4px;
 }
 .slidder-bar-nest {
@@ -1884,7 +1883,6 @@ img.sidebar-icon {
     left: 15px;
     padding: 0 5px 2px;
     position: relative;
-    text-transform: uppercase;
     top: 6px;
 }
 .nest .title-alt .titleIcon {

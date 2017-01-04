@@ -23,7 +23,7 @@ class UserModel extends CommonModel
     {
         $access['uid'] = $data['id'];
         $access['group_id'] = $data['group_id'];
-        M('auth_group_access')->add($access);
+        D('auth_group_access')->update($access);
     }
 
     public function _before_update(&$data, $options)
@@ -37,7 +37,8 @@ class UserModel extends CommonModel
 
     public function _after_update($data, $options)
     {
+        $access['uid'] = $data['id'];
         $access['group_id'] = $data['group_id'];
-        M('auth_group_access')->where(array('uid'=>$data['id']))->save($access);
+        D('auth_group_access')->update($access);
     }
 }

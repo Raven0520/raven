@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="91988291">
+  <component name="DataSourceManagerImpl" format="xml" hash="3962314348">
     <data-source source="LOCAL" name="raven" uuid="02640b9e-c586-4851-b4ee-20269ca97fcd">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
