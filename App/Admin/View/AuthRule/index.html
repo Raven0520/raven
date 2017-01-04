@@ -63,12 +63,12 @@
                                                 <td style="width: 5%; text-align: center">
                                                     <input class="form-control" value="{$sec.list_order}" style="text-align: center; width: 30px; padding: 0;" type="text" onblur="Common.setListOrder('{$sec.id}',this.value)">
                                                 </td>
-                                                <td style="width:12%; text-align: center; line-height: 30px;">{$sec.menu_type}</td>
-                                                <td style="width:16%; text-align: center; line-height: 30px;">{$sec.title}</td>
-                                                <td style="width:12%; text-align: center; line-height: 30px;"><i class="{$sec.icon}"></i></td>
+                                                <td style="width:8%; text-align: center; line-height: 30px;">{$sec.menu_type}</td>
+                                                <td style="width:18%; text-align: center; line-height: 30px;">{$sec.title}</td>
+                                                <td style="width:10%; text-align: center; line-height: 30px;"><i class="{$sec.icon}"></i></td>
                                                 <td style="width:12%; text-align: center;">
-                                                    <a href="#">
-                                                        <span class="status-metro status-add">Add Sec</span>
+                                                    <a onclick="AddNode('{$sec.id}')" data-toggle="modal" data-target="#add" style="cursor: pointer">
+                                                        <span class="status-metro status-add">Add Node</span>
                                                     </a>
                                                     <span onclick="Common.setStatus('{$sec.id}','{$sec.menu_status}')" class="{$sec.menu_status|StatusClass}" style="margin-top: 5px;">{$sec.menu_status|StatusName}</span>
                                                     <a onclick="Edit('{$sec.id}','Sec')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
@@ -203,6 +203,17 @@
             $("#menu_type").val(1);
             $('#action').html('Add');
             $("#title").html('Sec');
+            $('#submit_icon').removeClass().addClass('fa fa-plus');
+        }
+
+        /**
+         * 添加功能性节点
+         */
+        function AddNode(id) {
+            $("#sort_id").val(id);
+            $("#menu_type").val(2);
+            $('#action').html('Add');
+            $("#title").html('Node');
             $('#submit_icon').removeClass().addClass('fa fa-plus');
         }
 

@@ -45,9 +45,12 @@ class CommonController extends Controller
         //判断用户是否有权限
         $auth = new Auth();
         $this->auth = $auth->check('/'.CONTROLLER_NAME.'/'.ACTION_NAME,$this->user['id']);
-        dump($this->auth);
+//        echo '/'.CONTROLLER_NAME.'/'.ACTION_NAME;exit();
         if ($this->auth == false){
-            redirect(U('/PermissionDenied'));
+            if (empty($this->user)){
+                return redirect('/login');
+            }
+            redirect(U('/admin/PermissionDenied'));
         }
     }
 
