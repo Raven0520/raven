@@ -48,6 +48,10 @@ class LoginController extends Controller
         $this->ajaxReturn($this->res);
     }
 
+    public function PermissionDenied(){
+        $this->display();
+    }
+
     /**
      * 录入用户登录信息
      */

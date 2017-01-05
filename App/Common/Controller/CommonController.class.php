@@ -59,7 +59,7 @@ class CommonController extends Controller
             if (empty($this->user)){
                 return redirect('/login');
             }
-            return redirect('/Login/PermissionDenied');
+            return redirect(U('/Login/PermissionDenied'));
         }
     }
 
