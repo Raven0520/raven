@@ -106,4 +106,14 @@ class EmptyController extends CommonController
         IS_POST && $this->setStatus(CONTROLLER_NAME, $status, array('id' => $id));
     }
 
+    /**
+     * 上传图片
+     */
+    public function imgUpload(){
+        if ($_FILES['url']['error'] == 0){
+            $res = D('Img')->imgUpload();
+            $this->ajaxReturn($res);
+        }
+    }
+
 }

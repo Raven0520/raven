@@ -23,6 +23,27 @@
     <a type="button" data-toggle="modal" data-target="#upload" class="icon icon-upload" style="font-size: 18px; cursor: pointer; margin-right: 10px"></a>
 </block>
 
+<block name="content_1">
+    <div class="col-sm-12" style="margin-top: 10px">
+
+        <foreach name="index" item="vo">
+            <div style="width: 256px; margin-right: 9px; margin-top: 10px" class="pull-left">
+                <img src="{$vo.url}" height="150px" width="256px" />
+                <div style="text-align: center">
+                    <span>{$vo.name}</span>
+                </div>
+                <div style="text-align: center">
+                    <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
+                    <a onclick="Edit('{$vo.id}','{$vo.name}')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
+                    <a onclick="Del('{$vo.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
+                </div>
+            </div>
+        </foreach>
+
+
+    </div>
+</block>
+
 <block name="modal-one">
     <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
         <div class="modal-dialog" role="document" style="width: 480px;">
@@ -37,7 +58,7 @@
                                 </h4>
                             </div>
                             <div class="box-body">
-                                <form class="form-horizontal" role="form" id="submitForm" action="{:U('add')}" method="post" enctype="multipart/form-data">
+                                <form class="form-horizontal" role="form" id="submitForm" action="{:U('imgUpload')}" method="post" enctype="multipart/form-data">
 
                                     <div class="form-group" style="padding-top: 10px">
                                         <label class="col-sm-3 control-label">Name</label>
@@ -50,9 +71,16 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">URL</label>
                                         <div class="col-sm-7 fileUpload btn btn-info">
-                                            <input id="imgUpload" name="url" class="upload form-control" type="file" placeholder="上传图片">
+                                            <input id="imgUpload" name="imgUpload" class="upload form-control" type="file" placeholder="上传图片">
+                                            <input id="url" name="url" type="hidden">
                                             <span>Upload</span>
-                                            <img src="" id="img">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Preview</label>
+                                        <div class="col-sm-8">
+                                        <img src="" id="img" style="display: none" width="295px">
                                         </div>
                                     </div>
 
@@ -83,6 +111,8 @@
                     dataType : 'json',
                     success  : function (res) {
                         if (res.status == 1){
+                            $('#img').attr('src','/'+res.url).show();
+                            $('#url').val('/' + res.url);
                             msg.success(res.info,'');
                         }else {
                             msg.error(res.info);
@@ -90,7 +120,24 @@
                     }
                 })
             })
-        })
+        });
+
+        /**
+         * 添加功能
+         */
+        function add() {
+            var name = $('#name').val();
+            var url  = $('#url').val();
+
+            if (!name) {
+                return msg.error('Name不能为空!');
+            }
+            if (!url) {
+                return msg.error('请先上传图片!');
+            }
+
+            Common.Submit();
+        }
 
 
     </script>

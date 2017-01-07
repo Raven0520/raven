@@ -11,10 +11,4 @@ namespace Admin\Controller;
 
 class ImgController extends EmptyController
 {
-    public function add(){
-        if ($_FILES['url']['error'] == 0){
-            $res = D('Img')->imgUpload();
-            $this->ajaxReturn($res);
-        }
-    }
 }

@@ -66,10 +66,11 @@ class CommonModel extends RelationModel
         $info = $upload->upload();
 
         if (!$info) {
+            $res['status'] = 0;
             $res['info'] = $upload->getError();
         } else {// 上传成功
             $res['info'] = '上传成功';
-            $res['url'] = $upload->rootPath . $info['url']['savepath'] . $info['url']['savename'];
+            $res['url'] = $upload->rootPath . $info['imgUpload']['savepath'] . $info['imgUpload']['savename'];
         }
         return $res;
     }
