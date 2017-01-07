@@ -30,7 +30,7 @@
             <div style="width: 256px; margin-right: 9px; margin-top: 10px" class="pull-left">
                 <img src="{$vo.url}" height="150px" width="256px" />
                 <div style="text-align: center">
-                    <span>{$vo.name}</span>
+                    <span>ID:{$vo.id}  {$vo.name}</span>
                 </div>
                 <div style="text-align: center">
                     <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
