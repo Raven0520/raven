@@ -130,7 +130,7 @@
                                                     <ul style="margin-left: -40px">
                                                         <volist name="$modal_one[second]" id="one">
                                                             <li id="sec{$one.id}">
-                                                                <input tabindex="13" type="checkbox" id="{$one.id}" value="{one.id}">
+                                                                <input tabindex="13" type="checkbox" id="{$one.id}" value="{$one.id}">
                                                                 <label for="{$one.id}" onclick="getRules('{$one.id}')">{$one.title}</label>
                                                             </li>
                                                         </volist>
@@ -207,8 +207,10 @@
         }
     </script>
     <script>
+        var i;
         $(document).ready(function () {
             //CHECKBOX PRETTYFY
+            showRules();
             changeCheckbox();
         });
 
@@ -238,7 +240,6 @@
             $('#id').val(id);
             $('#action').html('Edit');
             $('#submit_icon').removeClass().addClass('icon-document-edit');
-            var i;
 
             $.ajax({
                 type : 'post',
@@ -258,6 +259,14 @@
                     return msg.error(res.info);
                 }
             })
+        }
+        
+        function showRules() {
+            var list = {$menu_list};
+            for (i = 0; i < list.length; i++){
+                getRules(list[i]);
+            }
+
         }
 
         function getRules(id) {
