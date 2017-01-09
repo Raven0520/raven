@@ -36,6 +36,14 @@
                     </div>
 
                     <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Mark</label>
+                        <div class="col-sm-6">
+
+                        </div>
+                        <a class="icon icon-plus" onclick="" data-toggle="modal" data-target="#mark"></a>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px">
                         <label class="col-sm-1 control-label">Content</label>
                         <div class="col-sm-8">
                             <textarea id="content" name="content" rows="12">还未编写哦！</textarea>
@@ -57,6 +65,36 @@
     </div>
 </block>
 
+<block name="modal-one">
+    <div class="modal fade" id="mark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px; min-height: 200px">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    <span id="action">Add</span><span>&nbsp;</span>Mark
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <foreach name="marks" item="vo" key="k">
+                                    <div class="pull-left" style="margin-right: 5px">
+                                        <button class="btn btn-xs btn-group" style="border-radius: 25px;" id="{$k}" onclick="chooseMark('{$k}')">{$vo}</button>
+                                    </div>
+                                </foreach>
+                                <div></div>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
 <block name="script">
 
     <!-- 配置文件 -->
@@ -65,11 +103,27 @@
     <script type="text/javascript" src="/Public/js/ueditor/ueditor.all.js"></script>
     <!-- 实例化编辑器 -->
     <script type="text/javascript">
-        var ue = UE.getEditor('content',{
+        var ue = UE.getEditor('content', {
             //自定义编辑器按钮
             toolbars: [
-                ['fullscreen', 'source', 'undo', 'redo', 'bold']
-            ]
+                ['fullscreen',
+                    'source',
+                    'undo',
+                    'redo',
+                    'bold',
+                    'italic', //斜体
+                    'underline', //下划线
+                    'strikethrough', //删除线
+                    '|',
+                    'insertcode' //代码语言
+                ]
+            ],
+            initialFrameHeight : 320
         });
+
+        //选中标签
+        function chooseMark(id) {
+            $('#'+ id).removeClass('btn-group').addClass('btn-info');
+        }
     </script>
 </block>

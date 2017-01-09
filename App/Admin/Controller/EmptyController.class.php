@@ -20,10 +20,14 @@ class EmptyController extends CommonController
     protected $order = '';
     protected $where = array();
 
+    protected $mark = '';
+
     protected function _initialize()
     {
         parent::_initialize();
         $this->where['status'] = array('neq', -1);
+        $this->mark = M('Mark')->where('status=1')->getField('id,name');
+        $this->assign('marks',$this->mark);
     }
 
     public function _empty()
