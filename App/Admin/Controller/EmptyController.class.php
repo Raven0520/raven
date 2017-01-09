@@ -46,6 +46,7 @@ class EmptyController extends CommonController
             }
             $this->ajaxReturn($this->res);
         }
+        $this->display();
     }
 
     /**
