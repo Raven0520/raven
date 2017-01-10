@@ -126,12 +126,12 @@
                                             <ul class="list">
                                                 <li>
                                                     <input tabindex="13" type="checkbox" id="{$modal_one.id}" value="{$modal_one.id}">
-                                                    <label for="{$modal_one.id}" >{$modal_one.title}<span style="color: red">*</span></label>
+                                                    <label for="{$modal_one.id}">{$modal_one.title}<span style="color: red">*</span></label>
                                                     <ul style="margin-left: -40px">
                                                         <volist name="$modal_one[second]" id="one">
                                                             <li id="sec{$one.id}">
                                                                 <input tabindex="13" type="checkbox" id="{$one.id}" value="{$one.id}">
-                                                                <label for="{$one.id}" onclick="getRules('{$one.id}')">{$one.title}</label>
+                                                                <label for="{$one.id}" onclick="getRules('{$one.id}')" style="border-bottom: 1px solid #666" >{$one.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>
@@ -150,7 +150,7 @@
                                                         <volist name="$modal_two[second]" id="two">
                                                             <li id="sec{two.id}">
                                                                 <input tabindex="13" type="checkbox" id="{$two.id}" value="{$two.id}">
-                                                                <label for="{$two.id}" onclick="getRules('{$two.id}')">{$two.title}</label>
+                                                                <label for="{$two.id}" onclick="getRules('{$two.id}')" style="border-bottom: 1px solid #666" >{$two.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>
@@ -169,7 +169,7 @@
                                                         <volist name="$modal_thr[second]" id="thr">
                                                             <li id="sec{$thr.id}">
                                                                 <input tabindex="13" name="Control" type="checkbox" id="{$thr.id}" value="{$thr.id}">
-                                                                <label for="{$thr.id}" onclick="getRules('{$thr.id}')">{$thr.title}</label>
+                                                                <label for="{$thr.id}" onclick="getRules('{$thr.id}')" style="border-bottom: 1px solid #666" >{$thr.title}</label>
                                                             </li>
                                                         </volist>
                                                     </ul>

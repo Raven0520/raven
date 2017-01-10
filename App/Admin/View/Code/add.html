@@ -37,10 +37,10 @@
 
                     <div class="form-group" style="padding-top: 10px">
                         <label class="col-sm-1 control-label">Mark</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" id="mark">
 
                         </div>
-                        <a class="icon icon-plus" onclick="" data-toggle="modal" data-target="#mark"></a>
+                        <a class="icon icon-plus" style="font-size: 20px" onclick="" data-toggle="modal" data-target="#mark-box"></a>
                     </div>
 
                     <div class="form-group" style="padding-top: 10px">
@@ -66,7 +66,7 @@
 </block>
 
 <block name="modal-one">
-    <div class="modal fade" id="mark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+    <div class="modal fade" id="mark-box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
         <div class="modal-dialog" role="document" style="width: 480px;">
             <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
                 <div class="row" style="margin-top: 25px; min-height: 200px">
@@ -79,9 +79,9 @@
                                 </h4>
                             </div>
                             <div class="box-body">
-                                <foreach name="marks" item="vo" key="k">
+                                <foreach name="marks" item="v" key="k">
                                     <div class="pull-left" style="margin-right: 5px">
-                                        <button class="btn btn-xs btn-group" style="border-radius: 25px;" id="{$k}" onclick="chooseMark('{$k}')">{$vo}</button>
+                                        <a type="button" class="status-metro status-disabled" status="0" style="border-radius: 5px; cursor: pointer" id="{$k}" onclick="chooseMark('{$k}','{$v}')">{$v}</a>
                                     </div>
                                 </foreach>
                                 <div></div>
@@ -122,8 +122,15 @@
         });
 
         //选中标签
-        function chooseMark(id) {
-            $('#'+ id).removeClass('btn-group').addClass('btn-info');
+        function chooseMark(id,name) {
+            var status = $('#' + id).attr('status');
+            if (status == 0){
+                $('#'+ id).removeClass('status-disabled').addClass('status-add').attr('status',1);
+                $("#mark").append("<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-"+ id +"'>"+ name +"</span>");
+            }else {
+                $('#'+ id).removeClass('status-add').addClass('status-disabled').attr('status',0);
+                $("#mark-" + id).remove();
+            }
         }
     </script>
 </block>

@@ -69,7 +69,7 @@
                                                 </td>
                                                 <td style="width:8%; text-align: center; line-height: 30px;">{$sec.menu_type}</td>
                                                 <td style="width:18%; text-align: center; line-height: 30px;">{$sec.title}</td>
-                                                <td style="width:10%; text-align: center; line-height: 30px;"><i class="{$sec.icon}"></i></td>
+                                                <td style="width:10%; text-align: center; line-height: 30px;"><span class="{$sec.icon}"></span></td>
                                                 <td style="width:12%; text-align: center;">
                                                     <a onclick="showNodes('{$sec.id}')" data-toggle="modal" data-target="#Nodes" style="cursor: pointer">
                                                         <span class="status-metro status-add">Add Node</span>
@@ -164,7 +164,7 @@
                                         <label class="col-sm-3 control-label">Icon</label>
                                         <div class="col-sm-8" style="position: relative">
                                             <input name="icon" id="icon_code" onblur="getIcon(this.value)" class="form-control" type="text" placeholder="图标">
-                                            <i class="" id="icon" style="position: absolute; top: 4px; right: 24px; font-size: 24px;"></i>
+                                            <span class="" id="icon" style="position: absolute; top: 0px; right: 24px; font-size: 24px;"></span>
                                         </div>
                                     </div>
 
