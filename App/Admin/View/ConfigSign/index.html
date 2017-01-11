@@ -29,7 +29,7 @@
                 <table id="responsive-example-table" class="table large-only">
                     <tbody>
                     <tr class="text-center">
-                        <th style="width:30%; text-align: center">Mark Name</th>
+                        <th style="width:30%; text-align: center">Sign Name</th>
                         <th style="width:40%; text-align: center">Count</th>
                         <th style="width:30%; text-align: center">Control</th>
                     </tr>
@@ -39,20 +39,16 @@
                             <td style="width:40%; text-align: center; line-height: 30px;">{$vo.rules}</td>
                             <td style="width:30%; text-align: center;">
                                 <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
-                                <a onclick="Edit('{$vo.id}','{$vo.name}')" class="status-metro status-disabled" data-toggle="modal" data-target="#add" style="cursor: pointer" >Edit</a>
+                                <a onclick="Edit('{$vo.id}','{$vo.name}')" class="status-metro status-disabled" data-toggle="modal" data-target="#add"
+                                   style="cursor: pointer">Edit</a>
                                 <a onclick="Del('{$vo.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
                             </td>
                         </tr>
                     </foreach>
                     </tbody>
                 </table>
-
-
             </div>
-
         </div>
-
-
     </div>
 </block>
 
@@ -66,19 +62,18 @@
                         <div class="box">
                             <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
                                 <h4><i class="fa fa-list"></i>
-                                    <span id="action">Add</span><span>&nbsp;</span><span id="title">Mark</span>
+                                    <span id="action">Add</span><span>&nbsp;</span><span id="title">Sign</span>
                                 </h4>
                             </div>
                             <div class="box-body">
                                 <form class="form-horizontal" role="form" id="submitForm">
                                     <input type="hidden" name="id" id="id">
-                                    <div class="form-group" style="padding-top: 10px">
-                                        <label class="col-sm-3 control-label">Title</label>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Name</label>
                                         <div class="col-sm-8">
-                                            <input id="name" name="name" class="form-control" type="text" placeholder="标签名称">
+                                            <input id="name" name="name" class="form-control" type="text" placeholder="标识名称">
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button onclick="add()" type="button" class="btn btn-default pull-right"><i id="submit_icon" class="fa fa-plus">
@@ -99,26 +94,19 @@
 
 <block name="script">
     <script>
-        /**
-         * 添加菜单
-         */
         function add() {
             var name = $('#name').val();
-
             if (!name) {
-                return msg.error('Name不能为空!');
+                return msg.error('标识名称不能为空');
             }
-
             Common.Submit();
         }
-
-
+        
         function changeModalAction() {
             $("#id").val('');
             $('#name').val('');
             $('#action').html('Add');
         }
-
 
         /**
          * 编辑

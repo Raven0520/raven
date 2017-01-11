@@ -40,7 +40,23 @@
                         <div class="col-sm-6" id="mark">
 
                         </div>
-                        <a class="icon icon-plus" style="font-size: 20px" onclick="" data-toggle="modal" data-target="#mark-box"></a>
+                        <a class="icon icon-plus" style="font-size: 25px" onclick="" data-toggle="modal" data-target="#mark-box"></a>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Author</label>
+                        <div class="col-sm-6">
+                            <input id="author" name="author" class="form-control" type="text" placeholder="作者名称">
+                        </div>
+                        <a class="icon icon-menu" style="font-size: 25px" onclick="showConfig(1)" data-toggle="modal" data-target="#config"></a>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Form</label>
+                        <div class="col-sm-6">
+                            <input id="form" name="form" class="form-control" type="text" placeholder="文章来源">
+                        </div>
+                        <a class="icon icon-menu" style="font-size: 25px" onclick="showConfig(2)" data-toggle="modal" data-target="#config"></a>
                     </div>
 
                     <div class="form-group" style="padding-top: 10px">
@@ -60,8 +76,6 @@
                 </form>
             </div>
         </div>
-
-
     </div>
 </block>
 
@@ -85,6 +99,80 @@
                                     </div>
                                 </foreach>
                                 <div></div>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="modal-two">
+    <div class="modal fade" id="config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px; min-height: 200px">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    <span>Config</span><span>&nbsp;</span><span id="modal_name">Author</span>
+                                    <span class="pull-right icon icon-plus" data-toggle="modal" data-target="#Add-Config" onclick="config()"></span>
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <table class="table small-only" id="table_node">
+                                    <tbody>
+                                    <tr>
+                                        <td style="padding-left: 5%">name</td>
+                                        <td>control</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="modal-thr">
+    <div class="modal fade" id="Add-Config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px; min-height: 200px">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    <span id="config-action">Add</span><span>&nbsp;</span><span id="config-name">Author</span>
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <form class="form-horizontal" role="form" id="submitFormS">
+                                    <input type="hidden" name="id" id="config_id">
+                                    <input type="hidden" name="id" id="sign">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Name</label>
+                                        <div class="col-sm-8">
+                                            <input id="name" name="name" class="form-control" type="text" placeholder="名称">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button onclick="addConfig()" type="button" class="btn btn-default pull-right"><i id="submitS_icon" class="fa fa-plus">
+                                                &nbsp;</i>Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- /BOX -->
@@ -131,6 +219,66 @@
                 $('#'+ id).removeClass('status-add').addClass('status-disabled').attr('status',0);
                 $("#mark-" + id).remove();
             }
+        }
+
+        /**
+         * 显示节点详情
+         */
+        function showConfig(id) {
+            $('#sign').val(id);
+            if (id == 1){
+                $('#modal_name').html('Author');
+            }
+            if (id == 2){
+                $('#modal_name').html('From');
+            }
+            var i;
+            $.ajax({
+                type : 'POST',
+                url  : "{:U('Config/getList')}",
+                data : {sign:id},
+                success : function (res) {
+//                    console.log(res);
+                    $("#table_node tr:gt(0)").remove();
+                    for (i=0; i<res.length; i++){
+                        var tr = '<tr>' +
+                                '<td style="padding-left: 5%">'+ res[i].name +'</td>' +
+                                '<td><a onclick="Edit('+ res[i].id +','+ this.title +')" title="Nodes" class="status-metro status-disabled" data-target="#add" data-toggle="modal" data-dismiss="modal" style="cursor: pointer">Edit</a></td>' +
+                                '</tr>';
+                        $('#table_node').append(tr);
+                    }
+                }
+            })
+        }
+
+        /**
+         * 添加参数表
+         */
+        function addConfig() {
+            var sign = $('#sign').val();
+            if (!sign){
+                return msg.error('标识错误，请重新操作');
+            }
+            var name = $('#name').val();
+            if (!name) {
+                return msg.error('Name Can Not Be Null');
+            }
+
+            var id = $('#config_id').val();
+            $.ajax({
+                type : 'POST',
+                url  : "{:U('Config/add')}",
+                data : {id:id,sign:sign,name:name},
+                success : function (res) {
+                    if (res.status == 1){
+                        msg.success(res.info);
+                        $('#Add-Config').modal('hide');
+                    }else {
+                        $('#Add-Config').modal('hide');
+                        msg.error(res.info);
+                    }
+                }
+            })
         }
     </script>
 </block>
