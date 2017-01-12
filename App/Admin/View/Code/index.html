@@ -5,5 +5,103 @@
 </block>
 
 <block name="content_1">
+    <div class="col-sm-12">
 
+        <div class="nest" id="StackableClose">
+            <div class="title-alt">
+                <h6>
+                    {:CONTROLLER_NAME}</h6>
+                <div class="titleClose">
+                    <a class="gone" href="#tStackableClose">
+                        <span class="entypo-cancel"></span>
+                    </a>
+                </div>
+                <div class="titleToggle">
+                    <a class="nav-toggle-alt" href="#StackableStatic">
+                        <span class="entypo-up-open"></span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="body-nest" id="StackableStatic">
+
+                <table id="responsive-example-table" class="table large-only">
+                    <tbody>
+                    <tr class="text-center">
+                        <th style="width:10%; text-align: center">Content Name</th>
+                        <th style="width:10%; text-align: center">Author</th>
+                        <th style="width:10%; text-align: center">From</th>
+                        <th style="width:10%; text-align: center">Summary</th>
+                        <th style="width:9%; text-align: center;">Control</th>
+                    </tr>
+                    <foreach name="index" item="vo">
+                        <tr>
+                            <td style="width:10%; text-align: center; line-height: 30px;">{$vo.title}</td>
+                            <td style="width:10%; text-align: center; line-height: 30px;">{$vo.author_name}</td>
+                            <td style="width:10%; text-align: center; line-height: 30px;">{$vo.from_name}</td>
+                            <td style="width:20%; text-align: center; line-height: 30px;"><a onclick="showContent('{$vo.content}','{$vo.title}')" style="cursor: pointer">{$vo.summary}</a></td>
+                            <td style="width:9%; text-align: right;">
+                                <span onclick="Common.setStatus('{$vo.id}','{$vo.status}')" class="{$vo.status|StatusClass}" style="margin-top: 5px;">{$vo.status|StatusName}</span>
+                                <a onclick="Edit('{$vo.id}')" class="status-metro status-disabled" style="cursor: pointer" >Edit</a>
+                                <a onclick="Del('{$vo.id}')" class="status-metro status-suspended" style="cursor: pointer">Del</a>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+</block>
+
+<block name="modal-one">
+    <div class="modal fade" id="content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 480px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12" style="width: 94%; margin-left: 3%;">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-title" style="background-color: #FFFFFF; padding-top: 10px;">
+                                <h4><i class="fa fa-list"></i>
+                                    <span id="title">title</span>
+                                </h4>
+                            </div>
+                            <div class="box-body">
+                                <div id="content-text">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script>
+        function showContent(id,title) {
+            $("#title").html(title);
+            $.ajax({
+                type : 'POST',
+                url  : "{:U('Content/edit')}",
+                data : {id:id},
+                success : function (res) {
+                    $('#content-text').html(res.content);
+                    $('#content').modal('show');
+                }
+            })
+        }
+
+        function Edit(id) {
+            window.location.href = "/Code/add?id="+id;
+        }
+    </script>
 </block>

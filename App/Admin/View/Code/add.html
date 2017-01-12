@@ -28,6 +28,8 @@
 
                 <form class="form-horizontal" role="form" id="submitForm">
                     <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="content_id" id="content_id">
+                    <input type="hidden" name="mark" id="mark-text">
                     <div class="form-group" style="padding-top: 10px">
                         <label class="col-sm-1 control-label">Title</label>
                         <div class="col-sm-6">
@@ -46,8 +48,8 @@
                     <div class="form-group" style="padding-top: 10px">
                         <label class="col-sm-1 control-label">Author</label>
                         <div class="col-sm-6">
-                            <select name="author" class="form-control">
-                                <option value="0">请选择文章作者</option>
+                            <select name="author" id="author" class="form-control">
+                                <option value="">请选择文章作者</option>
                                 <foreach name="author" item="v">
                                     <option value="{$v.id}">{$v.name}</option>
                                 </foreach>
@@ -59,8 +61,8 @@
                     <div class="form-group" style="padding-top: 10px">
                         <label class="col-sm-1 control-label">Form</label>
                         <div class="col-sm-6">
-                            <select name="from" class="form-control">
-                                <option value="0">请选择文章来源</option>
+                            <select name="from" id="from" class="form-control">
+                                <option value="">请选择文章来源</option>
                                 <foreach name="from" item="v">
                                     <option value="{$v.id}">{$v.name}</option>
                                 </foreach>
@@ -105,7 +107,8 @@
                             <div class="box-body">
                                 <foreach name="marks" item="v" key="k">
                                     <div class="pull-left" style="margin-right: 5px">
-                                        <a type="button" class="status-metro status-disabled" status="0" style="border-radius: 5px; cursor: pointer" id="{$k}" onclick="chooseMark('{$k}','{$v}')">{$v}</a>
+                                        <a type="button" class="status-metro status-disabled" status="0" style="border-radius: 5px; cursor: pointer" id="{$k}"
+                                           onclick="chooseMark('{$k}','{$v}')">{$v}</a>
                                     </div>
                                 </foreach>
                                 <div></div>
@@ -185,7 +188,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button onclick="addConfig()" type="button" class="btn btn-default pull-right"><i id="submitS_icon" class="fa fa-plus">
+                                            <button onclick="addConfig()" type="button" class="btn btn-default pull-right"><i id="submitS_icon"
+                                                                                                                              class="fa fa-plus">
                                                 &nbsp;</i>Submit
                                             </button>
                                         </div>
@@ -224,19 +228,46 @@
                     'insertcode' //代码语言
                 ]
             ],
-            initialFrameHeight : 320
+            initialFrameHeight: 320
+        });
+
+        var request = GetRequest();
+        $(function () {
+            if (request["id"] != undefined){
+                $.ajax({
+                    type : 'POST',
+                    url  : "{:U('edit)}",
+                    data : {id:request["id"]},
+                    success : function (res) {
+                        console.log(res);
+                    }
+                })
+            }
         });
 
         //选中标签
-        function chooseMark(id,name) {
+        function chooseMark(id, name) {
+            var i;
             var status = $('#' + id).attr('status');
-            if (status == 0){
-                $('#'+ id).removeClass('status-disabled').addClass('status-add').attr('status',1);
+            var mark = $('#mark-text');
+            if (status == 0) {
+                $('#' + id).removeClass('status-disabled').addClass('status-add').attr('status', 1);
+                if ('' == mark.val()){
+                    mark.val(id);
+                }else {
+                    mark.val(mark.val() + ',' + id);
+                }
                 $("#mark").append("" +
-                        "<input type='hidden' name='mark-"+ id +"' value='"+ id +"' id='input-"+ id +"'>" +
-                        "<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-"+ id +"'>"+ name +"</span>");
-            }else {
-                $('#'+ id).removeClass('status-add').addClass('status-disabled').attr('status',0);
+                        "<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + id + "'>" + name + "</span>");
+            } else {
+                var marks = mark.val().split(',');
+                $.each(marks,function (index,item) {
+                    if (item == id){
+                        marks.splice(index,1)
+                    }
+                });
+                mark.val(marks);
+                $('#' + id).removeClass('status-add').addClass('status-disabled').attr('status', 0);
                 $("#mark-" + id).remove();
                 $("#input-" + id).remove();
             }
@@ -247,25 +278,25 @@
          */
         function showConfig(id) {
             $('#sign').val(id);
-            if (id == 1){
+            if (id == 1) {
                 $('#modal_name').html('Author');
             }
-            if (id == 2){
+            if (id == 2) {
                 $('#modal_name').html('From');
             }
             var i;
             $.ajax({
-                type : 'POST',
-                url  : "{:U('Config/getList')}",
-                data : {sign:id},
-                success : function (res) {
+                type: 'POST',
+                url: "{:U('Config/getList')}",
+                data: {sign: id},
+                success: function (res) {
 //                    console.log(res);
                     $("#table_node tr:gt(0)").remove();
-                    for (i=0; i<res.length; i++){
+                    for (i = 0; i < res.length; i++) {
                         var tr = '<tr>' +
-                                '<td style="padding-left: 5%; cursor: pointer">'+ res[i].name +'</td>' +
-                                '<td>'+ res[i].attribute +'</td>' +
-                                '<td><a onclick="Edit('+ res[i].id +')" class="status-metro status-disabled" data-target="#Add-Config" data-toggle="modal" data-dismiss="modal" style="cursor: pointer">Edit</a></td>' +
+                                '<td style="padding-left: 5%; cursor: pointer">' + res[i].name + '</td>' +
+                                '<td>' + res[i].attribute + '</td>' +
+                                '<td><a onclick="Edit(' + res[i].id + ')" class="status-metro status-disabled" data-target="#Add-Config" data-toggle="modal" data-dismiss="modal" style="cursor: pointer">Edit</a></td>' +
                                 '</tr>';
                         $('#table_node').append(tr);
                     }
@@ -278,7 +309,7 @@
          */
         function changeModal(type) {
             $('#config').modal('hide');
-            if (type == 1){
+            if (type == 1) {
                 $('#config-action').html('Add');
                 $('#config_id').val('');
                 $('#name').val('');
@@ -292,18 +323,18 @@
         function Edit(id) {
             $('#config-action').html('Edit');
             var sign = $('#sign').val();
-            if (sign == 1){
+            if (sign == 1) {
                 $('#modal_name').html('Author');
             }
-            if (sign == 2){
+            if (sign == 2) {
                 $('#modal_name').html('From');
             }
 
             $.ajax({
-                type : 'POST',
-                url  : "{:U('Config/edit')}",
-                data : {id:id},
-                success : function (res) {
+                type: 'POST',
+                url: "{:U('Config/edit')}",
+                data: {id: id},
+                success: function (res) {
                     $('#config_id').val(res.id);
                     $('#sign').val(res.sign);
                     $('#name').val(res.name);
@@ -317,7 +348,7 @@
          */
         function addConfig() {
             var sign = $('#sign').val();
-            if (!sign){
+            if (!sign) {
                 return msg.error('标识错误，请重新操作');
             }
             var name = $('#name').val();
@@ -327,19 +358,44 @@
             var attribute = $('#attribute').val();
             var id = $('#config_id').val();
             $.ajax({
-                type : 'POST',
-                url  : "{:U('Config/add')}",
-                data : {id:id,sign:sign,name:name,attribute:attribute},
-                success : function (res) {
-                    if (res.status == 1){
+                type: 'POST',
+                url: "{:U('Config/add')}",
+                data: {id: id, sign: sign, name: name, attribute: attribute},
+                success: function (res) {
+                    if (res.status == 1) {
                         msg.success(res.info);
                         $('#Add-Config').modal('hide');
-                    }else {
+                    } else {
                         $('#Add-Config').modal('hide');
                         msg.error(res.info);
                     }
                 }
             })
+        }
+
+        /**
+         * 添加文章
+         */
+        function add() {
+            var title = $('#title').val();
+            var from = $('#from').val();
+            var author = $('#author').val();
+            var content = $('#content').html();
+
+            if (!title) {
+                return msg.error('Title can not be null')
+            }
+            if (!from) {
+                return msg.error('From can not be null')
+            }
+            if (!author) {
+                return msg.error('Author can not be null')
+            }
+            if (!content) {
+                return msg.error('Content can not be null')
+            }
+
+            Common.Submit();
         }
     </script>
 </block>

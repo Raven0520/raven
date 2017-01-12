@@ -46,6 +46,7 @@ class EmptyController extends CommonController
             if (false != $id) {
                 $this->res['id'] = $id;
             } else {
+                $this->res['status'] = 0;
                 $this->res['info'] = $modal->getError();
             }
             $this->ajaxReturn($this->res);
