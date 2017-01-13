@@ -107,7 +107,7 @@
                             <div class="box-body">
                                 <foreach name="marks" item="v" key="k">
                                     <div class="pull-left" style="margin-right: 5px">
-                                        <a type="button" class="status-metro status-disabled" status="0" style="border-radius: 5px; cursor: pointer" id="{$k}"
+                                        <a type="button" class="btn " status="0" style="border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 18px" id="{$k}"
                                            onclick="chooseMark('{$k}','{$v}')">{$v}</a>
                                     </div>
                                 </foreach>
@@ -253,8 +253,8 @@
                         var marks = res.mark.split(',');
                         $.each(marks,function (index,item) {
                             var name = $('#' + item).html();
-                            $('#' + item).removeClass('status-disabled').addClass('status-add').attr('status', 1);
-                            $("#mark").append("<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + item + "'>" + name + "</span>");
+                            $('#' + item).addClass('btn-info').attr('status', 1);
+                            $("#mark").append("<span style='margin-right: 5px; font-weight: bold' class='btn btn-info' id = 'mark-" + item + "'>" + name + "</span>");
                         })
                     }
                 })
@@ -267,13 +267,13 @@
             var status = $('#' + id).attr('status');
             var mark = $('#mark-text');
             if (status == 0) {
-                $('#' + id).removeClass('status-disabled').addClass('status-add').attr('status', 1);
+                $('#' + id).addClass('btn-info').attr('status', 1);
                 if ('' == mark.val()){
                     mark.val(id);
                 }else {
                     mark.val(mark.val() + ',' + id);
                 }
-                $("#mark").append("<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + id + "'>" + name + "</span>");
+                $("#mark").append("<span style='margin-right: 5px; font-weight: bold' class='btn btn-info' id = 'mark-" + id + "'>" + name + "</span>");
             } else {
                 var marks = mark.val().split(',');
                 $.each(marks,function (index,item) {
@@ -282,7 +282,7 @@
                     }
                 });
                 mark.val(marks);
-                $('#' + id).removeClass('status-add').addClass('status-disabled').attr('status', 0);
+                $('#' + id).removeClass('btn-info').attr('status', 0);
                 $("#mark-" + id).remove();
                 $("#input-" + id).remove();
             }
