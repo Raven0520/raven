@@ -11,5 +11,4 @@ use Common\Model\CommonModel;
 
 class AuthGroupAccessModel extends CommonModel
 {
-    protected $pk = 'uid';
 }

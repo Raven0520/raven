@@ -28,18 +28,20 @@ class UserModel extends CommonModel
 
     public function _before_update(&$data, $options)
     {
+
         if (empty($data['password'])){
             unset($data['password']);
         }else {
             $data['password'] = getMD5($data['password']);
         }
-    }
-
-    public function _after_update($data, $options)
-    {
         if ($data['group_id']){
-            $access['uid'] = $data['id'];
+            $access['uid'] = $options['where']['id'];
             $access['group_id'] = $data['group_id'];
+            $res = M('auth_group_access')->where(array('uid'=>$access['uid']))->find();
+            if ($res){
+                $access['id'] = $res['id'];
+            }
+
             D('auth_group_access')->update($access);
         }
     }
