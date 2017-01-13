@@ -213,6 +213,7 @@
     <script type="text/javascript" src="/Public/js/ueditor/ueditor.all.js"></script>
     <!-- 实例化编辑器 -->
     <script type="text/javascript">
+
         var ue = UE.getEditor('content', {
             //自定义编辑器按钮
             toolbars: [
@@ -236,10 +237,25 @@
             if (request["id"] != undefined){
                 $.ajax({
                     type : 'POST',
-                    url  : "{:U('edit)}",
+                    url  : "{:U('edit')}",
                     data : {id:request["id"]},
                     success : function (res) {
                         console.log(res);
+                        $('#id').val(res.id);
+                        $('#content_id').val(res.content);
+                        $('#title').val(res.title);
+                        $('#author').val(res.author);
+                        $('#from').val(res.from);
+                        ue.ready(function () {
+                            ue.setContent(res.content_text);
+                        });
+                        $('#mark-text').val(res.mark);
+                        var marks = res.mark.split(',');
+                        $.each(marks,function (index,item) {
+                            var name = $('#' + item).html();
+                            $('#' + item).removeClass('status-disabled').addClass('status-add').attr('status', 1);
+                            $("#mark").append("<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + item + "'>" + name + "</span>");
+                        })
                     }
                 })
             }
@@ -257,8 +273,7 @@
                 }else {
                     mark.val(mark.val() + ',' + id);
                 }
-                $("#mark").append("" +
-                        "<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + id + "'>" + name + "</span>");
+                $("#mark").append("<span style='margin-right: 5px' class='status-metro status-add' id = 'mark-" + id + "'>" + name + "</span>");
             } else {
                 var marks = mark.val().split(',');
                 $.each(marks,function (index,item) {
