@@ -6,8 +6,7 @@
  * Time: 01:40
  */
 
-namespace Admin\Model;
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class AuthGroupAccessModel extends CommonModel
 {

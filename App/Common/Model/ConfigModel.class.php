@@ -6,10 +6,7 @@
  * Time: 14:10
  */
 
-namespace Admin\Model;
-
-
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class ConfigModel extends CommonModel
 {

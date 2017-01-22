@@ -14,6 +14,7 @@
 			'Img' instanceof Admin\Model\ImgModel,
 			'Mark' instanceof Admin\Model\MarkModel,
 			'ConfigSign' instanceof Admin\Model\ConfigSignModel,
+			'Profile' instanceof Admin\Model\ProfileModel,
 			'AuthGroupAccess' instanceof Admin\Model\AuthGroupAccessModel,
 			'Adv' instanceof Think\Model\AdvModel,
 			'Relation' instanceof Think\Model\RelationModel,

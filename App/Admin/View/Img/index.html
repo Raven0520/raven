@@ -28,7 +28,7 @@
 
         <foreach name="index" item="vo">
             <div style="width: 250px; margin-right: 9px; margin-top: 10px" class="pull-left">
-                <img src="{$vo.url}" height="150px" width="250px" />
+                <a data-toggle="modal" data-target="#imgPreview" onclick="showImg('{$vo.url}')"><img src="{$vo.url}" height="150px" width="250px" /></a>
                 <div style="text-align: center">
                     <span>ID:{$vo.id}  {$vo.name}</span>
                 </div>
@@ -39,7 +39,6 @@
                 </div>
             </div>
         </foreach>
-
 
     </div>
 </block>
@@ -92,6 +91,26 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                        <!-- /BOX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="modal-two">
+    <div class="modal fade" id="imgPreview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-top: 13%;">
+        <div class="modal-dialog" role="document" style="width: 960px;">
+            <div class="modal-content" style="background-color: rgba(255,255,255,1); border: none; box-shadow: none;">
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12">
+                        <!-- BOX -->
+                        <div class="box">
+                            <div class="box-body">
+                                <img id="previewUrl" src="" width="100%">
                             </div>
                         </div>
                         <!-- /BOX -->
@@ -169,6 +188,12 @@
             })
         }
 
+        /**
+         * 图片预览
+         */
+        function showImg(url) {
+            $('#previewUrl').attr('src',url);
+        }
 
     </script>
 </block>

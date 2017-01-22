@@ -6,8 +6,7 @@
  * Time: 13:59
  */
 
-namespace Admin\Model;
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class ProfileModel extends CommonModel
 {

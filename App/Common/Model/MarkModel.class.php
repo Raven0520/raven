@@ -6,8 +6,7 @@
  * Time: 05:24
  */
 
-namespace Admin\Model;
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class MarkModel extends CommonModel
 {

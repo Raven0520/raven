@@ -1,6 +1,5 @@
 <?php
-namespace Admin\Model;
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 /**
  * Created by PhpStorm.

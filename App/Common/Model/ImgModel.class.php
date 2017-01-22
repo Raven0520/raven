@@ -6,9 +6,7 @@
  * Time: 06:18
  */
 
-namespace Admin\Model;
-
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class ImgModel extends CommonModel
 {

@@ -6,8 +6,7 @@
  * Time: 23:12
  */
 
-namespace Admin\Model;
-use Common\Model\CommonModel;
+namespace Common\Model;
 
 class UserModel extends CommonModel
 {
