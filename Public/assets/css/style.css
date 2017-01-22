@@ -12,7 +12,7 @@
 }
 body {
     color: #555!important;
-    font-family:"Open Sans", Arial, sans-serif!important;
+    font-family:"Open Sans",'微软雅黑', Arial, sans-serif!important;
     font-size: 13px!important;
     line-height: 20px;
     overflow-x: hidden!important;

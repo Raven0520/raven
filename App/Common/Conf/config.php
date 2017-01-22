@@ -17,6 +17,7 @@ return array(
     'APP_SUB_DOMAIN_DEPLOY' => 1,
     'APP_SUB_DOMAIN_RULES' => array(
         'r.raven.com' => 'Admin',
+        'raven.com' => 'Home',
         'r.raven.pub' => 'Admin'
     ),
 

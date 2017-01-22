@@ -240,7 +240,6 @@
                     url  : "{:U('edit')}",
                     data : {id:request["id"]},
                     success : function (res) {
-                        console.log(res);
                         $('#id').val(res.id);
                         $('#content_id').val(res.content);
                         $('#title').val(res.title);

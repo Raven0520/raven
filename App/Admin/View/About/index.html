@@ -1,0 +1,169 @@
+<extend name="Common/index"/>
+
+<block name="headerCss">
+    <style>
+        .fileUpload {
+            position: relative;
+            overflow: hidden;
+            margin-left: 15px;
+            margin-right: 25px;
+        }
+
+        .fileUpload input.upload {	position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            opacity: 0;
+            font-size: 20px;
+            filter: alpha(opacity=0);
+        }
+    </style>
+</block>
+
+<block name="content_1">
+
+    <div class="col-sm-12">
+
+        <div class="nest" id="StackableClose">
+            <div class="title-alt">
+                <h6>
+                    Add {:CONTROLLER_NAME}</h6>
+                <div class="titleClose">
+                    <a class="gone" href="#tStackableClose">
+                        <span class="entypo-cancel"></span>
+                    </a>
+                </div>
+                <div class="titleToggle">
+                    <a class="nav-toggle-alt" href="#StackableStatic">
+                        <span class="entypo-up-open"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="body-nest" id="StackableStatic">
+
+                <form class="form-horizontal" action="{:U('imgUpload')}" role="form" id="submitForm" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id" value="1">
+                    <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Title</label>
+                        <div class="col-sm-6">
+                            <input id="title" name="title" class="form-control" type="text" placeholder="文章名称" value="{$index[0]['title']}">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Img</label>
+                        <div class="col-sm-4">
+                            <input id="name" name="name" class="form-control" type="text" placeholder="图片名称" value="{$index[0]['name']}">
+                        </div>
+                        <div class="col-sm-1 fileUpload btn btn-info">
+                            <input id="imgUpload" name="imgUpload" class="upload form-control" type="file" placeholder="上传图片">
+                            <input id="url" name="url" type="hidden" value="{$index[0]['url']}">
+                            <span>Upload</span>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="text-center" style="line-height: 30px">570 * 309</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px; display: block" id="previewBox">
+                        <label class="col-sm-1 control-label">ImgPreview</label>
+                        <div class="col-sm-4">
+                            <img src="{$index[0]['url']}" id="previewUrl" width="100%">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="padding-top: 10px">
+                        <label class="col-sm-1 control-label">Content</label>
+                        <div class="col-sm-8">
+                            <textarea id="content" name="content" rows="12"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <button onclick="add()" type="button" class="btn btn-default pull-left"><i id="submit_icon" class="fa fa-plus">
+                                &nbsp;</i>Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/Public/js/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/Public/js/ueditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+
+        $(function () {
+            ue.ready(function () {
+                ue.setContent("{$index[0]['content']}");
+            });
+
+            var files = $('.files');
+            $('#imgUpload').change(function () {
+                $('#previewBox').hide();
+                $('#submitForm').ajaxSubmit({
+                    dataType : 'json',
+                    success  : function (res) {
+                        if (res.status == 1){
+                            $('#previewUrl').attr('src','/'+res.url);
+                            $('#previewBox').show();
+                            $('#url').val('/' + res.url);
+                            msg.success(res.info,'');
+                        }else {
+                            msg.error(res.info);
+                        }
+                    }
+                })
+            })
+        });
+
+        var ue = UE.getEditor('content', {
+            //自定义编辑器按钮
+            toolbars: [
+                ['fullscreen',
+                    'source',
+                    'undo',
+                    'redo',
+                    'bold',
+                    'italic', //斜体
+                    'underline', //下划线
+                    'strikethrough', //删除线
+                    '|',
+                    'insertcode' //代码语言
+                ]
+            ],
+            initialFrameHeight: 320
+        });
+
+        /**
+         * 添加文章
+         */
+        function add() {
+            var title = $('#title').val();
+            var name  = $('#name').val();
+            var content = $('#content').html();
+
+            if (!title) {
+                return msg.error('Title can not be null')
+            }
+
+            if (!name) {
+                return msg.error('Name can not be null')
+            }
+            if (!content) {
+                return msg.error('Content can not be null')
+            }
+
+            Common.Submit();
+        }
+    </script>
+</block>

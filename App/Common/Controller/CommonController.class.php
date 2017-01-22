@@ -1,6 +1,5 @@
 <?php
 namespace Common\Controller;
-use Think\Auth;
 use Think\Controller;
 
 /**
@@ -26,41 +25,7 @@ class CommonController extends Controller
 
     protected function _initialize()
     {
-        //注册菜单拦
-        $where = array('sort_id' => 0 , 'menu_status' => 1);
-        if (CONTROLLER_NAME == 'AuthGroup'){
-            $where['menu_status'] = array('neq',-1);
-        }
-        for ($i = 1; $i < 4; $i++){
-            $where['modal'] = $i;
-            $modal[$i] = D('AuthRule')->where($where)->order('list_order')->select();
-            foreach ($modal[$i] as $k => $v){
-                $name = 'second' . $modal[$i][$k]['id'];
-                $modal[$i][$k]['second'] = $name;
-                $sec_where = array('sort_id' => $modal[$i][$k]['id'], 'menu_status' => 1);
-                'AuthGroup' == CONTROLLER_NAME && $sec_where['menu_status'] = array('neq',-1);
-                $data = $this->select('AuthRule',$sec_where,$field = true, $order = 'list_order');
-                $this->assign($name,$data);
-            }
-            $this->assign('modal'.$i,$modal[$i]);
-        }
-        $this->user = session('user');
-        $this->assign('user',$this->user);
-        //判断用户是否有权限
-        $auth = new Auth();
-        $action = ACTION_NAME;
-        if ($action == 'Status' || $action == 'ListOrder'){
-            $action = 'edit';
-        }
-        $this->auth = $auth->check('/'.CONTROLLER_NAME.'/'.$action,$this->user['id']);
-//        echo '/'.CONTROLLER_NAME.'/'.ACTION_NAME;exit();
-        1 == $this->user['id'] && $this->auth = true;
-        if ($this->auth == false){
-            if (empty($this->user)){
-                return redirect('/login');
-            }
-            return redirect(U('/Login/PermissionDenied'));
-        }
+
     }
 
     /**

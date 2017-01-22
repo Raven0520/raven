@@ -25,7 +25,7 @@ class EmptyController extends CommonController
     protected function _initialize()
     {
         parent::_initialize();
-        $this->where['status'] = array('neq', -1);
+        $this->where['status'] = 1;
         $this->mark = M('Mark')->where('status=1')->getField('id,name');
         $this->assign('marks',$this->mark);
     }
