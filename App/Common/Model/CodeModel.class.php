@@ -19,7 +19,7 @@ class CodeModel extends CommonModel
             $content = M('content')->add(array('content'=>$data['content']));
         }
         if ($content){
-            $data['summary'] = substr($data['content'],0,30);
+            $data['summary'] = substr($data['content'],0,60);
             $data['content'] = $content;
         }else{
             return false;
